@@ -1,0 +1,14 @@
+{{#each expenses as |expense|}}
+  {{balance-change
+    tagName="li"
+    balanceChange=expense
+    delete=(action 'delete')
+  }}
+{{else}}
+  <p> No data. </p>
+{{/each}}
+<h3> Total {{money expenseSum}}</h3>
+
+{{#link-to 'dashboard.expenses.new'}}
+  New Expense
+{{/link-to}}

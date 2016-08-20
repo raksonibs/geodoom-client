@@ -1,0 +1,119 @@
+$home-background: #eae8e8;
+$neopets-yellow: #ffd026;
+$text-color: #6e86e8;
+$main-background: #fff;
+$main-colour: #ababab;
+$darker-main: darken($main-colour, 7);
+$green: lime;
+
+.home {
+  // margin: 0 100px;
+  background: $main-background;
+
+  video {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    background-size: cover;
+    transition: 1s opacity;
+  }
+
+  .header-home {
+    // background: $neopets-yellow;
+    height: 500px;
+    overflow: hidden;
+    // background: url('/images/banner_bg.png');
+  }
+
+  .header-text {
+    position: relative;
+    // top: 75px;
+    // padding: 50px 0;
+    text-align: center;
+  }
+
+  .header-content {
+    position: absolute;
+    top: 150px;
+    color: $main-background;
+    z-index: 5;
+
+    .content-container {      
+      background: rgba(251, 251, 251, 0.23);
+    }
+
+  }
+
+  footer {
+    &.page-footer {
+      background: $main-colour;
+    }
+  }
+
+  .navbar-fixed {
+    position: absolute !important;
+
+    nav {
+      background: hsla(358, 79%, 68%, 0) !important;
+      padding: 0 100px;
+
+      a {
+        color: $main-background;
+        transition: all 1s ease;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+    
+}
+
+.home-content {
+  // padding: 0 100px;
+  background: $home-background;
+
+  .pets-info {
+    height: 600px;
+    overflow: hidden;
+  }
+}
+
+.test-slick {
+  width: 90%;  
+  position: relative;
+  left: 5%; 
+}
+
+.links {
+  margin: 20px 0 20px;
+  text-align: center;
+
+  .link {
+    &__item {
+      margin: 0 20px;
+      font-size: 2em;
+      display: inline-block;
+
+      .value {
+        color: $green;
+      }
+    }
+  }
+}
+
+.seperate {
+  padding: 100px 0;
+}

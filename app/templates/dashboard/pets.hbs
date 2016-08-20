@@ -1,0 +1,12 @@
+<div class="gutters">
+  <h1> Your Pets </h1>
+
+  <ul class="pets">
+    {{#each model as |pet|}}
+      {{pet-view
+        pet=pet
+        vertices=pet.vertices
+      }}
+    {{/each}}
+  </ul>
+</div>

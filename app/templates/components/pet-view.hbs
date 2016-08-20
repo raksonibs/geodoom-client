@@ -1,0 +1,26 @@
+<li class="pet">
+  {{pet-picture 
+    vertices=pet.vertices 
+    colour=pet.colour
+  }}
+  
+  {{#if petState}}
+    {{display-pet-state
+      petState=petState
+    }}
+  {{/if}}
+
+  <h3>{{pet.name}}</h3>
+  <h4>Level: {{pet.level}}</h4>
+
+  {{#unless petState}}
+    {{#each pet.stats as |stat|}}
+      {{stat-display
+        stat=stat
+      }}
+    {{/each}}
+  {{/unless}}
+  {{!-- NTD: should be serialized but isn't with nested relationship being used --}}
+
+</li>
+{{!-- pet-view --}}

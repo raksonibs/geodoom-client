@@ -1,0 +1,5 @@
+<input value={{balanceChangeValue}} onchange={{action "updateFormInput" value="target.value"}}>
+{{pikaday-input input value=balanceChangeDate}}
+<button onclick={{action (action save) balanceChange}}>
+  Save
+</button>

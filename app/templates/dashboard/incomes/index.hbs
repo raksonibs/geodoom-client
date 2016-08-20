@@ -1,0 +1,12 @@
+{{#each incomes as |income|}}
+  {{balance-change
+    tagName="li"
+    balanceChange=income
+    delete=(action 'delete')
+  }}
+{{/each}}
+<h3> Total {{money incomeSum}}</h3>
+
+{{#link-to "dashboard.incomes.new"}}
+  New Income
+{{/link-to}}

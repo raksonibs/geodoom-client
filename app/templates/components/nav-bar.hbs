@@ -1,0 +1,11 @@
+<div class="navbar">
+  <div class="navbar-period">
+    <span class="period-title">Geodoom</span>
+  </div>
+  <div class="user-actions">
+    {{#link-to 'dashboard.settings'}}
+      {{currentUser.email}}
+    {{/link-to}}
+    <button {{action (action logout)}}> Sign Out </button>
+  </div>
+</div>

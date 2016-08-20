@@ -1,0 +1,17 @@
+<div class="gutters">
+  <h3> Your Battles </h3>
+
+  {{#each model as |battle|}}
+    {{#if (eq battle.status 'pending')}}
+      <p>{{#link-to 'dashboard.battles.show' battle.id}}Battle name: {{battle.name}}{{/link-to}}</p>
+    {{else}}
+      <p>{{#link-to 'dashboard.battles.battledome' battle.id}}Battle name: {{battle.name}}{{/link-to}}</p>
+    {{/if}}
+  {{else}}
+    <p> No battles yet!</p>
+  {{/each}}
+
+  {{#link-to 'dashboard.battles.new'}}
+    New Battle!
+  {{/link-to}}
+</div>

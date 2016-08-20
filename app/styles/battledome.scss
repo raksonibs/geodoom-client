@@ -1,0 +1,28 @@
+@import "variables.scss";
+$transparent-back: rgba(91, 91, 212, 0.3);
+$blue: rgba(91, 91, 212, 0.0);
+
+.full-arena {
+  background: url('arena.gif') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.battledome {
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+  &#header {
+    border: 1px dashed $background;
+    padding: 10px 50px;
+    text-align: center;
+    background: $transparent-back;
+
+    hr {      
+      border-top: 1px dashed $blue;
+    }
+  }
+}

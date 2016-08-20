@@ -1,0 +1,23 @@
+<h3> Battle Form </h3>
+
+{{#each battle.errors as |error|}}
+  <p>
+    {{error.attribute}}:
+    {{error.message}}
+  </p>
+{{/each}}
+
+{{#each users as |user|}}
+  <p> {{user.email}}</p>
+{{/each}}
+<form {{action 'submitForm' on="submit"}}>
+<select onchange={{action (action updateSelectedUser) value="target.value"}}>
+{{#each users as |user|}}
+  <option value={{user.email}}>
+    {{user.email}}
+  </option>
+{{/each}}
+</select>
+
+<button type="submit">Submit</button>
+</form>

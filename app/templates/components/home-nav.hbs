@@ -1,0 +1,28 @@
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper">
+     {{#link-to 'home' class="brand-logo"}}Geodoom{{/link-to}}
+      <ul class="right hide-on-med-and-down">
+        <li>{{#link-to 'login' class="primary"}}Login{{/link-to}}</li>
+        <li>{{#link-to 'signup' class="primary"}}Signup{{/link-to}}</li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="header-text">
+  <video id="video_player" playsinline autoplay=true muted loop=true poster="images/banner_bg.png">
+      <source src="https://archive.org/download/WebmVp8Vorbis/webmvp8.webm" type="video/webm">
+      <source src="https://archive.org/download/WebmVp8Vorbis/webmvp8_512kb.mp4" type="video/mp4">
+      <source src="https://archive.org/download/WebmVp8Vorbis/webmvp8.ogv" type="video/ogg">
+      Your browser doesn't support HTML5 video tag.
+  </video>
+  <div class="header-content">
+    <div class="content-container">      
+      <h1>Shaping Up the Fighting world</h1>
+      <h3>The only Canadian Geometric Battlearena that makes shapes look so bad</h3>
+      {{#link-to 'login' class="button"}}Login{{/link-to}}
+      {{#link-to 'signup' class="button"}}Signup{{/link-to}}
+    </div>
+  </div>
+</div>

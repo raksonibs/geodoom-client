@@ -1,0 +1,25 @@
+<div class="sidebar">
+  <ul class="sidebar-items">
+    <li class="sidebar-item user-profile">
+      {{#link-to "dashboard.settings"}}
+        {{fa-icon "user" size=5}}
+        {{currentUser.email}}       
+      {{/link-to}}
+    </li>
+    <li class="sidebar-item">
+      {{#link-to "dashboard.overview"}}
+        Overview        
+      {{/link-to}}
+    </li>
+    <li class="sidebar-item">
+      {{#link-to 'dashboard.pets'}}
+        Pets        
+      {{/link-to}}
+    </li>
+    <li class="sidebar-item">
+      {{#link-to 'dashboard.battles'}}
+        Battles        
+      {{/link-to}}
+    </li>
+  </ul>
+</div>

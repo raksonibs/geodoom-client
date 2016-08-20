@@ -1,0 +1,20 @@
+<div class="gutters">
+  <h2>
+    Won Battles: {{wonBattles.length}}
+  </h2>
+  {{progress-bar widthPercent=winPercent class="income-bar"}}
+  <h2>
+    Lost Battles: {{lostBattles.length}}
+  </h2>
+  {{progress-bar widthPercent=lossPercent class="expense-bar"}}
+
+  <h2> Battle Summaries </h2>
+  {{monthly-overview-chart
+    battles=battles    
+  }}
+
+  <h2>
+    Average win ratio per day:
+    {{avgWinRatioPerDay}}
+  </h2>
+</div>

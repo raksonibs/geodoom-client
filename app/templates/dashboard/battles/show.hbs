@@ -1,0 +1,22 @@
+<div class="gutters">
+  <h1> Your Battle </h1>
+
+  <h4>Name: {{model.name}}</h4>
+  <h4> Challenger: {{model.challengerEmail}}</h4>
+  <h4> Challenged: {{model.challengedEmail}}</h4>
+  <h4> Status: {{model.status}}</h4>
+
+  <div class="select-a-pet">
+    Select a Pet: <br />
+    Currently Selected: {{selectedPet}} <br />
+    <select onchange={{action 'updateSelectedPet' value="target.value"}}>
+    {{#each currentUser.pets as |pet|}}
+      <option value={{pet.name}}>
+        {{pet.name}} - {{pet.level}} - {{pet.vertices}}
+      </option>
+    {{/each}}
+    </select>
+  </div>
+
+  <button class="start" onclick={{action 'startMatch'}}>Start Match</button>
+</div>

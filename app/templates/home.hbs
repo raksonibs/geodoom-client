@@ -1,0 +1,22 @@
+<div class="home">
+  {{home-header}}
+  {{home-content
+    petsCount=pets.length
+    usersCount=users.length
+    battlesCount=battles.length
+    pets=pets
+  }}
+
+  <div class="links gutters seperate">
+    <div class="link__item">
+      Total Pets<br /><span class="value">{{pets.length}}</span>
+    </div>
+    <div class="link__item">
+      Total Battles<br /><span class="value">{{battles.length}}</span>
+    </div>
+    <div class="link__item">
+      Total Users<br /><span class="value">{{users.length}}</span>
+    </div>
+  </div>
+  {{home-footer}}
+</div>

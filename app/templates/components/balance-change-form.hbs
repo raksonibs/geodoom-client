@@ -1,0 +1,23 @@
+{{#each balanceChange.errors as |error|}}
+  <p>
+    {{error.attribute}}:
+    {{error.message}}
+  </p>
+{{/each}}
+
+{{pikaday-input value=valueForDate}}
+{{!-- why do i need target.value --}}
+<input value={{valueForInput}} oninput={{action 'updateFormInput' value="target.value"}} autofocus>
+<button onclick={{action (action save balanceChange)}} disabled={{isDisabled}}>
+{{#if balanceChange.isSaving}}
+  Saving
+{{else}}
+  Save
+{{/if}}
+</button>
+
+{{#if isNegative}}
+  <p class="red">
+    Value needs not to be negative
+  </p>
+{{/if}}

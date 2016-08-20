@@ -1,0 +1,16 @@
+{{!-- nested! --}}
+
+{{side-bar 
+  currentUser=session.currentUser
+}}
+
+{{nav-bar 
+  currentUser=session.currentUser
+  logout=(action 'logout')
+}}
+
+<div class="main">
+  {{liquid-outlet}}
+</div>
+
+{{!-- {{global-buttons}} --}}

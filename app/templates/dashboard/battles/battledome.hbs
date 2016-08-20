@@ -1,0 +1,48 @@
+<div class="full-arena">
+  <header id="header" class="battledome">  
+    <h1> Battledome</h1>
+    {{!-- <h2>Status: {{battle.status}}</h2>
+    <h2>Status: {{winnerFound}}</h2> --}}
+
+    <hr/>
+
+    <h2>{{battle.challengerEmail}} <br/>VS<br/> {{battle.challengedEmail}} </h2>
+
+    <hr/>
+
+    <h3>{{battle.challengerPet.name}} VS {{battle.challengedPet.name}}</h3>
+
+    <hr/>
+    <h3>Current Turn: {{battle.currentTurn}}</h3>
+  </header><!-- /header -->
+
+  {{!-- {{#if winnerFound}} 
+    {{#modal-dialog}}
+      This Battle is done!
+    {{/modal-dialog}}
+  {{/if}} --}}
+
+  <div class="arena pets">
+    {{#each petStates as |petState index|}}
+      {{#if (eq index 1)}}
+        <div class="vs pet">VS</div> 
+      {{/if}}
+
+      <div class="challenger">
+        {{pet-view
+          pet=petState.pet
+          vertices=petState.pet.vertices
+          petState=petState
+        }}
+      </div>
+
+      {{#if (eq battle.currentTurnEmail session.currentUser.email)}}
+        {{#if notWinnerFound}}
+          <button class="btn" {{action 'sendMessage' 'attack'}}>Attack</button>
+          <button class="btn" {{action 'sendMessage' 'defend'}}>Defend</button>
+        {{/if}}
+      {{/if}}
+
+    {{/each}}
+  </div>
+</div> 

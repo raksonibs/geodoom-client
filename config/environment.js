@@ -47,9 +47,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.serverURL = 'http://localhost:3000';
+    ENV.serverURL = 'https://desolate-woodland-60847.herokuapp.com';
     ENV.contentSecurityPolicy = {
-      "connect-src": "'self' ws://localhost:4000"
+      "connect-src": "'self' ws://protected-garden-47773.herokuapp.com"
     }
   }
 

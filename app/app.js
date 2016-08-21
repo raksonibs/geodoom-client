@@ -13,6 +13,8 @@ App = Ember.Application.extend({
   Resolver
 });
 
+// require('torii/load-initializers')['default']();
+
 loadInitializers(App, config.modulePrefix);
 
 export default App;

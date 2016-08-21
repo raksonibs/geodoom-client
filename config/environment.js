@@ -58,6 +58,21 @@ module.exports = function(environment) {
     routeIfAlreadyAuthenticated: 'dashboard'
   }
 
+  ENV.torii = {
+      // a 'session' property will be injected on routes and controllers
+    sessionServiceName: 'sessionTorii',
+    providers: {
+      'steam-oauth2': {
+        apiKey:      'cat',
+        redirectUri: "http://localhost:4200/oauth2callback"
+      },
+      'google-oauth2': {
+        apiKey: "161580081432-v9mnjust9nhchrf30ri81mtbr8mecje3.apps.googleusercontent.com",
+        redirectUri: "http://localhost:4200/oauth2callback"
+      }
+    }
+  }
+
   ENV.apiBaseURL = ENV.serverURL + '/' + ENV.apiNamespace;
 
   return ENV;

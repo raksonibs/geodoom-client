@@ -17,4 +17,13 @@
   {{#link-to 'signup'}}
     Signup
   {{/link-to}}
+
+  {{#if sessionTorii.isWorking}}
+    One sec while we get you signed in...
+  {{else}}
+    {{error}}
+    <button onclick={{action 'loginOauth'}}>
+      Sign In with Facebook
+    </button>
+  {{/if}}
 </div>

@@ -22,7 +22,8 @@ var SteamOauth2 = Oauth2.extend({
   redirectUri: configurable('redirectUri',
                             'http://localhost:8000/oauth2callback'),
 
-  hd: configurable('hd', '')
+  hd: configurable('hd', ''),
+  
 });
 
 export default SteamOauth2;

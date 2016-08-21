@@ -54,8 +54,8 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth'] = {
-    routeAfterAuthentication: 'dashboard/overview',
-    routeIfAlreadyAuthenticated: 'dashboard/overview'
+    routeAfterAuthentication: 'dashboard',
+    routeIfAlreadyAuthenticated: 'dashboard'
   }
 
   ENV.torii = {

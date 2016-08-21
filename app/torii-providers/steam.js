@@ -1,9 +1,12 @@
 export default Ember.Object.extend({
   open: function(authentication){
-    var authorizationCode = authentication.authorizationCode;
+    // debugger
+    // var authorizationCode = authentication.authorizationCode;
+    var authorizationCode = 'cat';
+
     return new Ember.RSVP.Promise(function(resolve, reject){
       Ember.$.ajax({
-        url: 'api/session',
+        url: 'http://steamcommunity.com/openid/login',
         data: { 'steam-auth-code': authorizationCode },
         dataType: 'json',
         success: Ember.run.bind(null, resolve),

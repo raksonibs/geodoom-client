@@ -54,14 +54,18 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth'] = {
-    routeAfterAuthentication: 'dashboard',
-    routeIfAlreadyAuthenticated: 'dashboard'
+    routeAfterAuthentication: 'dashboard/overview',
+    routeIfAlreadyAuthenticated: 'dashboard/overview'
   }
 
   ENV.torii = {
       // a 'session' property will be injected on routes and controllers
     sessionServiceName: 'sessionTorii',
     providers: {
+      'steam': {
+        apiKey:      'cat',
+        redirectUri: "http://localhost:4200/oauth2callback"
+      },
       'steam-oauth2': {
         apiKey:      'cat',
         redirectUri: "http://localhost:4200/oauth2callback"

@@ -16,7 +16,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
       var route = this,
           controller = this.controllerFor('login');
       // The provider name is passed to `open`
-      this.get('sessionTorii').open('steam-oauth2').then(function(){
+      this.get('sessionTorii').open('steam').then(function(){
         route.transitionTo('dashboard/overview');
       }, function(error){
         controller.set('error', 'Could not sign you in: '+error.message);

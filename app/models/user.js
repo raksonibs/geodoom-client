@@ -6,6 +6,9 @@ import currencies from 'red-green-client/constants/currencies'
 export default Model.extend({
   currency: attr('string'),
   email: attr('string'),
+  email: attr('uid'),
+  nickname: attr('nickname'),
+  image: attr('image'),
   currencySymbol: Ember.computed('currency', function() {
     return currencies[this.get('currency')].symbol
   }),

@@ -1,8 +1,6 @@
 export default Ember.Object.extend({
-  open: function(authentication){
-    // debugger
-    // var authorizationCode = authentication.authorizationCode;
-    var authorizationCode = 'cat';
+  open: function(authentication){    
+    var authorizationCode = authentication.authorizationCode;;
 
     return new Ember.RSVP.Promise(function(resolve, reject){
       Ember.$.ajax({

@@ -64,11 +64,11 @@ module.exports = function(environment) {
     providers: {
       'steam': {
         apiKey:      'cat',
-        redirectUri: "http://localhost:4200/oauth2callback"
+        redirectUri: "http://localhost:3000/auth/steam/callback"
       },
       'steam-oauth2': {
         apiKey:      'cat',
-        redirectUri: "http://localhost:4200/oauth2callback"
+        redirectUri: "http://localhost:3000/auth/steam/callback"
       },
       'google-oauth2': {
         apiKey: "161580081432-v9mnjust9nhchrf30ri81mtbr8mecje3.apps.googleusercontent.com",

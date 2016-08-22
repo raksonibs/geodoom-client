@@ -1,0 +1,6 @@
+<div class="gutters">
+  <h1>{{currentUser.email}}</h1>
+  {{#each currentUser.gameStats as |gs|}}
+    <p>{{gs.name}}: {{gs.value}}</p>
+  {{/each}}
+</div>

@@ -26,6 +26,7 @@ Router.map(function() {
       this.route('pet-states');
     });
     this.route('pets');
+    this.route('stats');
   });
   this.route('logout');
   this.route('home', { path: '/'});

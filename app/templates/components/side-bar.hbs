@@ -2,7 +2,11 @@
   <ul class="sidebar-items">
     <li class="sidebar-item user-profile">
       {{#link-to "dashboard.settings"}}
-        {{fa-icon "user" size=5}}
+        {{#if (eq currentUser.image null)}}
+          {{fa-icon "user" size=5}}
+        {{else}}
+          <img src={{currentUser.image}} alt="">
+        {{/if}}
         {{currentUser.email}}       
       {{/link-to}}
     </li>
@@ -19,6 +23,11 @@
     <li class="sidebar-item">
       {{#link-to 'dashboard.battles'}}
         Battles        
+      {{/link-to}}
+    </li>
+    <li class="sidebar-item">
+      {{#link-to 'dashboard.stats'}}
+        Stats
       {{/link-to}}
     </li>
   </ul>

@@ -349,3 +349,40 @@ main {
     }
   }
 }
+
+.gauge-chart {
+  .ct-chart {    
+    width: 100%;
+    height: 500px;
+  }
+}
+
+.charts {
+  width: 100%;
+  background: $nav-black;
+  display: flex;  
+  -webkit-justify-content: flex;
+  flex-flow: row wrap;
+  -webkit-justify-content: center;
+  justify-content: center;
+  justify-content: space-between;
+
+  .title {
+    text-align: center;
+  }
+
+  .chart {
+    margin: 15px;
+    background: lightgrey;
+    border-radius: 5px;
+
+    &.small {
+      flex: 1;
+    }
+
+    &.large {
+      flex: 2;
+    }
+
+  }
+}

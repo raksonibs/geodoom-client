@@ -45,6 +45,9 @@ export default Ember.Mixin.create({
   totalShotsHit: Ember.computed('stats.[]', function() {
     return this.getName('total_shots_hit');
   }),
+  totalShotsMissed: Ember.computed('totalShots', 'totalShotsHit', function() {
+    return (this.get('totalShots') - this.getName('total_shots_hit'));
+  }),
   hitPercent: Ember.computed('totalShotsHit', 'totalShots', function() {
     return this.percentFormer(this.get('totalShotsHit'), this.get('totalShots'))
   }),

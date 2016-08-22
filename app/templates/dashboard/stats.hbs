@@ -2,9 +2,30 @@
   <h1>{{currentUser.email}} Stats</h1>
   <h3>TotalShots: {{totalShots}}</h3>
   <h3>TotalShotsHit: {{totalShotsHit}}</h3>
+  <h3>TotalShotsMissed: {{totalShotsMissed}}</h3>  
   <h3>hitPercent: {{hitPercent}}</h3>
   <h3>win Ratio: {{winRatio}}</h3>
   <h3>kd Ratio: {{kills}}:{{deaths}}</h3>
+
+  <div class="charts">
+    {{gauge-chart
+      two=kills
+      one=deaths
+      title="K/D"
+      targetClass="kd"
+      labelsPassed='["Kills", "Deaths"]'
+    }}
+    {{money-earned
+      totalMoneyEarned=totalMoneyEarned
+    }}
+    {{gauge-chart
+      two=totalShotsMissed
+      one=totalShotsHit
+      title="Shot Accurracy"
+      targetClass="sa"
+      labelsPassed='["Hit", "Missed"]'
+    }}
+  </div>
   
   {{!-- {{#each model as |gs|}}
     <p>{{gs.name}}: {{gs.value}}</p>

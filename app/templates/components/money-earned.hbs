@@ -1,0 +1,11 @@
+{{totalMoneyEarned}}
+{{!-- if value less than 500, decrease, if more increase --}}
+{{#if (lt totalMoneyEarned 7000)}}
+  <div class="increase">  
+    10% decrease
+  </div>
+{{else}}
+  <div class="increase">  
+    10% increase
+  </div>
+{{/if}}

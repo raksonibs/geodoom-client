@@ -323,3 +323,29 @@ main {
 @import "home.scss";
 @import "battledome.scss";
 @import "pet-pictures.scss";
+
+@-webkit-keyframes moneyScroll{0%{background-position-y:0}100%{background-position-y:354px}}
+@-moz-keyframes moneyScroll{0%{background-position-y:0}100%{background-position-y:354px}}
+@keyframes moneyScroll{0%{background-position-y:0}100%{background-position-y:354px}}
+
+.money-sliders {
+  padding: 25px;
+  background: url('/images/money.png');
+  animation-duration: 15s;
+  animation-name: moneyScroll;
+  animation-iteration-count: infinite;
+
+  .slick-arrow {
+    background-color: green;
+  }
+
+  .money-containers {
+    .money {
+      &--item {
+        width: 200px;
+        height: 200px;
+        background: $red;
+      }
+    }
+  }
+}

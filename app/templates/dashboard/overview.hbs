@@ -1,6 +1,5 @@
 <div class="gutters">
   <br />
-  <h1>{{session.currentUser.uid}}</h1>
   {{#if (eq session.currentUser.uid null)}}
     {{#if sessionTorii.isWorking}}
       One sec while we get you signed in...
@@ -11,8 +10,14 @@
       </button>
     {{/if}}
   {{else}}
+    <h1>{{session.currentUser.uid}}</h1>
     Your Steam account is linked
   {{/if}}
+
+  {{money-slider    
+    wagerStart=1
+    wagerEnd=10
+  }}
 
   <h2>
     Won Battles: {{wonBattles.length}}

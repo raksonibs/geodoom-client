@@ -1,4 +1,6 @@
 <h3>Currently selected: {{clickedAmount}}</h3>
+<h3>Current WagerStart: {{wagerStart}}</h3>
+<h3>Current WagerEnd: {{wagerEnd}}</h3>
 <div class="money-containers">
   <div class="money--item">
     <button onclick={{action 'changeClickedAmount'}}>{{wagerAmount}}</button>
@@ -10,3 +12,6 @@
     <button onclick={{action 'changeClickedAmount'}}>{{math-op wagerAmount 4 "*"}}</button>
   </div>
 </div>
+
+<br />
+<div id="ui-slider"></div>

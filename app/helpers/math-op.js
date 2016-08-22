@@ -21,7 +21,7 @@ export function mathOp(params/*, hash*/) {
       break;
   }
 
-  return resultand;
+  return parseFloat(resultand).toFixed(2);
 }
 
 export default Ember.Helper.helper(mathOp);

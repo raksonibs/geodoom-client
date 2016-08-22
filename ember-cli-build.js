@@ -17,6 +17,8 @@ module.exports = function(defaults) {
   app.import('vendor/slick.js')
   app.import('vendor/slick.css')
   app.import('vendor/slick-theme.css')
+  app.import('vendor/slider.js')
+  app.import('vendor/slider.css')
 
   return app.toTree();
 };

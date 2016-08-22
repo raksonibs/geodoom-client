@@ -18,9 +18,11 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
           controller = this.controllerFor('login'),
           thisState = this;
 
+      const user = this.store.findRecord('user', 5);
+
       // The provider name is passed to `open`
-      this.get('sessionTorii').open('steam-oauth2').then(function(){
-          
+      this.get('sessionTorii').open('steam-oauth2').then(function(user){         
+          thisState.set('session.currentUser', user);
           route.transitionTo('dashboard');
       }, function(error){
         controller.set('error', 'Could not sign you in: '+error.message);

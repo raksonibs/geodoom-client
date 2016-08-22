@@ -1,4 +1,19 @@
 <div class="gutters">
+  <br />
+  <h1>{{session.currentUser.uid}}</h1>
+  {{#if (eq session.currentUser.uid null)}}
+    {{#if sessionTorii.isWorking}}
+      One sec while we get you signed in...
+    {{else}}
+      {{error}}
+      <button onclick={{action 'linkAccount'}}>
+        Link your steam account
+      </button>
+    {{/if}}
+  {{else}}
+    Your Steam account is linked
+  {{/if}}
+
   <h2>
     Won Battles: {{wonBattles.length}}
   </h2>

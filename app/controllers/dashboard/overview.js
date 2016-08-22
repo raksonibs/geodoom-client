@@ -24,6 +24,10 @@ export default Ember.Controller.extend(BalanceChangePropertiesMixin, BattlePrope
           this.send('refreshRoute')
         })
       }
+    },
+
+    linkAccount() {
+       this.send('linkSteam');
     }
   }
 });

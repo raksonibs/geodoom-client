@@ -35,13 +35,14 @@ export default Ember.Component.extend({
     slider.noUiSlider.on('change', function(args) {      
       thisState.set('wagerStart', parseFloat(args[0]));
       thisState.set('wagerEnd', parseFloat(args[1]));
+      // should be wager amount and active carousel slide
+      thisState.set('clickedAmount', thisState.get('wagerAmount'));
     });
   },
 
   actions: {
-    changeClickedAmount(amount) {
-      debugger
-      this.set('clickedAmount', amount);
+    changeClickedAmount(amount) {      
+      this.set('clickedAmount', amount.target.textContent);
     }
   }
 });

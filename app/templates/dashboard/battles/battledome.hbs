@@ -1,28 +1,11 @@
 <div class="full-arena">
-  <header id="header" class="battledome">  
-    <h1> Battledome</h1>
-    {{!-- <h2>Status: {{battle.status}}</h2>
-    <h2>Status: {{winnerFound}}</h2> --}}
-
-    <hr/>
-
-    <h2>{{battle.challengerEmail}} <br/>VS<br/> {{battle.challengedEmail}} </h2>
-
-    <hr/>
-
-    <h3>{{battle.challengerPet.name}} VS {{battle.challengedPet.name}}</h3>
-
-    <hr/>
-    <h3>Current Turn: {{battle.currentTurn}}</h3>
-  </header><!-- /header -->
-
   {{!-- {{#if winnerFound}} 
     {{#modal-dialog}}
       This Battle is done!
     {{/modal-dialog}}
   {{/if}} --}}
 
-  <div class="arena pets">
+  <div class="arena">
     {{#each petStates as |petState index|}}
       {{#if (eq index 1)}}
         <div class="vs pet">VS</div> 
@@ -45,4 +28,21 @@
 
     {{/each}}
   </div>
+
+  <header id="header" class="battledome">  
+    <h1> Battledome</h1>
+    {{!-- <h2>Status: {{battle.status}}</h2>
+    <h2>Status: {{winnerFound}}</h2> --}}
+
+    <hr/>
+
+    <h2>{{battle.challengerEmail}} <br/>VS<br/> {{battle.challengedEmail}} </h2>
+
+    <hr/>
+
+    <h3>{{battle.challengerPet.name}} VS {{battle.challengedPet.name}}</h3>
+
+    <hr/>
+    <h3>Current Turn: {{battle.currentTurn}}</h3>
+  </header><!-- /header -->
 </div> 

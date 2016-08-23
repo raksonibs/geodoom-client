@@ -1,11 +1,4 @@
 <div class="gutters">
-  <h1>{{currentUser.email}} Stats</h1>
-  <h3>TotalShots: {{totalShots}}</h3>
-  <h3>TotalShotsHit: {{totalShotsHit}}</h3>
-  <h3>TotalShotsMissed: {{totalShotsMissed}}</h3>  
-  <h3>hitPercent: {{hitPercent}}</h3>
-  <h3>win Ratio: {{winRatio}}</h3>
-  <h3>kd Ratio: {{kills}}:{{deaths}}</h3>
 
   <div class="charts">
     {{gauge-chart
@@ -15,9 +8,25 @@
       targetClass="kd"
       labelsPassed='["Kills", "Deaths"]'
     }}
-    {{money-earned
-      totalMoneyEarned=totalMoneyEarned
-    }}
+
+    <div class="moneys">
+      <div class="money-breakdown">
+        {{money-earned
+          totalMoneyEarned=totalMoneyEarned
+          text="Money Earned"
+        }}
+        {{money-earned
+          totalMoneyEarned=5001
+          text="Money Lost"
+        }}
+      </div>
+      <div class="active-games">
+        {{active-games-breakdown
+          text="Recent Games Played"
+        }}
+      </div>
+    </div>
+
     {{gauge-chart
       two=totalShotsMissed
       one=totalShotsHit

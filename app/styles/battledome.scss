@@ -8,9 +8,31 @@ $blue: rgba(91, 91, 212, 0.0);
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+  .arena {
+    display: flex;
+    width: 90%;
+    // margin-right: 100px;
+    
+    .challenger {
+      flex: 2;
+    }
+
+    .vs {
+      border: none;
+      flex: 1;
+      display: flex;
+      font-size: 10rem;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+  }
 }
 
 .battledome {
+
   h1 {
     margin: 0;
     padding: 0;

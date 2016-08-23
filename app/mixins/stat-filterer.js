@@ -51,8 +51,8 @@ export default Ember.Mixin.create({
   hitPercent: Ember.computed('totalShotsHit', 'totalShots', function() {
     return this.percentFormer(this.get('totalShotsHit'), this.get('totalShots'))
   }),
-  winRatio: Ember.computed('wins', 'totals', function() {
-    return this.percentFormer(this.get('wins'), this.get('totals'))
+  winRatio: Ember.computed('wins', 'total', function() {
+    return this.percentFormer(this.get('wins'), this.get('total'))
   }),
   kdRatio: Ember.computed('kills', 'deaths', function() {
     return this.percentFormer(this.get('kills'), this.get('deaths'))

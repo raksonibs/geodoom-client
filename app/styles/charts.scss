@@ -1,0 +1,144 @@
+.gauge-chart {
+  .ct-chart {    
+    width: 100%;
+    height: 500px;
+  }
+}
+
+.charts {
+  margin-top: 20px;
+  width: 100%;
+  background: $nav-black;
+  display: flex;  
+  -webkit-justify-content: flex;
+  flex-flow: row wrap;
+  -webkit-justify-content: center;
+  // justify-content: center;
+  // justify-content: space-between;
+
+  .title,
+  p, h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+    color: $chart-text;
+    padding: 0 20px;
+  }
+
+  .moneys {
+    display: flex;
+    flex-flow: column wrap;
+    flex: 1;
+    margin: 15px;
+
+    .money-breakdown {
+      flex: 1;
+      display: flex;
+      flex-flow: row;
+
+      &:last-of-type {        
+        margin-top: 15px;
+      }
+      // width: 100%;
+      // height: 100%;
+    }
+
+    .amount, .increase, .decrease {
+      @extend .gutters;
+    }
+
+    .amount {
+      color: $chart-text;
+      font-size: 3em;
+    }
+
+    .increase, .decrease {
+      font-size: 2em;
+    }
+
+    .increase {
+      color: $green;      
+    }
+
+    .decrease {
+      color: $red;
+    }
+
+    .arrow {
+      display: inline-block;
+      width: 0;
+      height: 0;
+    }
+
+    .arrow-up {     
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      
+      border-bottom: 20px solid black;
+
+       &.increase {
+        border-bottom: 20px solid $green;
+      }
+
+      &.decrease {
+        border-bottom: 20px solid $red;
+      }
+    }
+
+    .arrow-down {     
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      
+      border-top: 20px solid #f00;
+
+      &.increase {
+        border-top: 20px solid $green;
+      }
+
+      &.decrease {
+        border-top: 20px solid $red;
+      }
+    }
+
+    .money-chart {
+      width: 100%;
+      height: 100%;
+      background: $nav-black-light;
+      border-radius: 5px;
+
+      &:last-of-type {
+        // margin-top: 15px;
+        margin-left: 15px;
+      }
+    }
+  }
+  
+  .active-games {
+    // height: 100%;
+    flex: 2;
+    background: $nav-black-light;
+    // height: 96%;
+    margin-top: 15px;
+    border-radius: 5px;
+
+    .active-games-breakdown {
+      height: 100%;
+      .breakdown {
+        height: 100%;
+      }
+    }
+  }
+
+  .chart {
+    margin: 15px;
+    background: $nav-black-light;
+    border-radius: 5px;
+
+    &.small {
+      flex: 1;
+    }
+
+    &.large {
+      flex: 2;
+    }
+
+  }
+}

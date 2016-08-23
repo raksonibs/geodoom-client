@@ -1,11 +1,13 @@
-{{totalMoneyEarned}}
-{{!-- if value less than 500, decrease, if more increase --}}
-{{#if (lt totalMoneyEarned 7000)}}
-  <div class="increase">  
+<p class="earned-text">{{text}}</p>
+<div class="amount">{{totalMoneyEarned}}</div>
+{{#if (lt totalMoneyEarned 6000)}}
+  <div class="decrease">  
+    <div class="arrow arrow-down decrease"></div>
     10% decrease
   </div>
 {{else}}
-  <div class="increase">  
-    10% increase
+  <div class="increase"> 
+    <div class="arrow arrow-up increase"></div>
+    17% increase
   </div>
 {{/if}}

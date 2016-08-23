@@ -7,7 +7,18 @@ var models = {}
 
 function func(data, model) {
   // console.log("LINE: " + data);
-  models[model]["attributes"].push(data);
+  var data = data.trim().replace(",", '');
+
+  if (/attr/.test(data) && !/import/.test(data)) {
+    models[model]["attributes"].push(data);
+  } else if (/hasMany/.test(data) || /belongsTo/.test(data) && !/import/.test(data)) {
+    if (/hasMany/.test(data)) {      
+      models[model]["relationships"]["hasMany"].push(data);
+    } else {
+      console.log("PRITING OVER HERE MAN", data);
+      models[model]["relationships"]["belongsTo"].push(data);
+    }
+  }
   // return models
 }
 
@@ -40,37 +51,12 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
     if (/\.js/.test(data[i])) {
       // console.log(data[i]);
 
-
-      // fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
-      //   var promise = new Promise(function(resolve, reject) {        
-      //     // console.log(fileData);
-      //     readLines(fileData, func, model)
-      //     resolve(models);
-      //   })
-
-      //   promise
-      //   .then(function(val) {
-      //     console.log(val);
-      //   })
-      //   .catch(function(val) {
-      //     console.log(val);
-      //   })
-      // });
-
-      // fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
-      //     readLines(fileData, func, model);
-
-      //     if (i === data.length) {
-      //       console.log(models);
-      //     }
-      //   })
-
       (function() {
         // console.log(data[i])
         var model = data[i].split(".")[0];
         models[model] = {
                         "attributes": [],
-                        "relationships": {}
+                        "relationships": {"belongsTo": [], "hasMany": []}
                       };
         fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
           console.log("MODEL: ", model)

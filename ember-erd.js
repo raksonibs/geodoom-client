@@ -75,7 +75,7 @@ var string = `<!DOCTYPE html>
         position: absolute;
         background: black;
         width: 40px;
-        height: 5px;
+        height: 3px;
         transform-origin: 0% 50%;
         transition: all 100ms cubic-bezier(.8,.5,1,.8);
         /*border-radius: 50%/100px 100px 0 0;*/
@@ -90,8 +90,16 @@ var string = `<!DOCTYPE html>
         content:'';
         border-top: 7px solid transparent;
         border-bottom: 8px solid transparent;
-        border-left: 14px solid black;
+        border-left: 20px solid red;
         transform: translate(40px, -5px);  
+      }
+
+      .row {        
+        text-align: center;
+      }
+
+      .row.offset .model {
+        width: 400px;
       }
     </style>
   </head>
@@ -134,63 +142,61 @@ return `
         hasMany = models[i].dataset.hasmany
         modelName = models[i].dataset.model
         var divFrom = models[i]
-        if (modelName === "user" || modelName === "battle") {
 
-          if (hasMany.length !== 0) {
-            // name is pluralized so remove s to search
-            var rels = hasMany.split(" ")
-            for (var j = 0; j <  rels.length; j++) {
+        if (hasMany.length !== 0) {
+          // name is pluralized so remove s to search
+          var rels = hasMany.split(" ")
+          for (var j = 0; j <  rels.length; j++) {
 
-              var toName = rels[j].slice(0, -1);
-              var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
+            var toName = rels[j].slice(0, -1);
+            var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
 
-              var divFromCoords = divFrom.getBoundingClientRect()
-              var divToCoords = divTo.getBoundingClientRect()
-              var divFromCenter = {
-                "x": divFromCoords.left + divFromCoords.width/2,
-                "y": divFromCoords.top + divFromCoords.height/2,
-              }
-
-              var divToCenter = {
-                "x": divToCoords.left + divToCoords.width/2,
-                "y": divToCoords.top + divToCoords.height/2,
-              }
-
-              // need to figure out where to put arrow,
-              // if the model from is above model to, then we aim for top of container
-              // if model from is below to (via top in coords), aim for the bottom of the model container
-              var newArrow = document.createElement("div"); 
-              newArrow.className += "arrow"
-              newArrow.className += " " + modelName + "_to_" + toName
-              newArrow.style.top = divFromCenter.y + "px";
-              newArrow.style.left = (divFromCenter.x) + "px"
-              // newArrow.style.bottom = divFromCoords.bottom + "px"
-              // newArrow.style.right = divFromCoords.right + "px";
-
-              var deg = angle({"x": divFromCenter.x,
-                             "y": divFromCenter.y
-                            }, 
-                          {"x": divToCenter.x, 
-                           "y": divToCenter.y
-                          });
-              
-              var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
-              
-              var prefixTransform = "transform";
-
-
-              newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
-              newArrow.style.width = distanceForArrow;
-              
-              document.body.appendChild(newArrow);
-
-              if (divFromCoords.top > divToCoords.top) {
-                // arrow needs to point down
-                
-              } else {
-                // arrow needs to point up
-              }                              
+            var divFromCoords = divFrom.getBoundingClientRect()
+            var divToCoords = divTo.getBoundingClientRect()
+            var divFromCenter = {
+              "x": divFromCoords.left + divFromCoords.width/2,
+              "y": divFromCoords.top + divFromCoords.height/2,
             }
+
+            var divToCenter = {
+              "x": divToCoords.left + divToCoords.width/2,
+              "y": divToCoords.top + divToCoords.height/2,
+            }
+
+            // need to figure out where to put arrow,
+            // if the model from is above model to, then we aim for top of container
+            // if model from is below to (via top in coords), aim for the bottom of the model container
+            var newArrow = document.createElement("div"); 
+            newArrow.className += "arrow"
+            newArrow.className += " " + modelName + "_to_" + toName
+            newArrow.style.top = divFromCenter.y + "px";
+            newArrow.style.left = (divFromCenter.x) + "px"
+            // newArrow.style.bottom = divFromCoords.bottom + "px"
+            // newArrow.style.right = divFromCoords.right + "px";
+
+            var deg = angle({"x": divFromCenter.x,
+                           "y": divFromCenter.y
+                          }, 
+                        {"x": divToCenter.x, 
+                         "y": divToCenter.y
+                        });
+            
+            var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
+            
+            var prefixTransform = "transform";
+
+
+            newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
+            newArrow.style.width = distanceForArrow;
+            
+            document.body.appendChild(newArrow);
+
+            if (divFromCoords.top > divToCoords.top) {
+              // arrow needs to point down
+              
+            } else {
+              // arrow needs to point up
+            }                              
           }
         }
         console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
@@ -253,18 +259,30 @@ function readLines(data, addToModels, model) {
   }
 }
 
-function readLinesFromFile(keys, j, model) {
+function readLinesFromFile(keys, j, model, newRow) {
   var key = keys[j][1];
+  var numRelationships = keys[j][0];
+  var modelString = '';
+
   if (models[key]["attributes"] !== undefined) {      
     var attributes = _.map(models[key]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " <span class='attr-val'>" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + "</span><br />"})
   } else {
     var attributes = models[key]["attributes"]
   }
 
-  var relationships = models[key]["relationships"]
-  modelString = `<div class="model" data-model="${[key]}" data-belongsTo="${relationships[
-                      "belongsTo"].join(" ")}" data-hasMany="${relationships[
-                      "hasMany"].join(" ")}">
+  var relationships = models[key]["relationships"];
+
+  console.log(newRow)
+  if (newRow && j !== 0) {
+    // need to close old new row
+    modelString += `</div><div class='row ${j % 2 === 0 ? 'offset' : ''}'>`
+  } else if (newRow && j === 0) {
+    modelString += `<div class='row'>`
+  }
+
+  modelString += `<div class="model" data-model="${[key]}" 
+                                     data-belongsTo="${relationships["belongsTo"].join(" ")}" 
+                                     data-hasMany="${relationships["hasMany"].join(" ")}">
                   <div class="name">
                     ${[key]}
                   </div>
@@ -272,13 +290,12 @@ function readLinesFromFile(keys, j, model) {
                     ${attributes.join(" ")}
                   </div>
                   <div class="relations">
-                    belongsTo: ${relationships[
-                      "belongsTo"].join(", ")}
+                    belongsTo: ${relationships["belongsTo"].join(", ")}
                     <br />
-                    hasMany: ${relationships[
-                      "hasMany"].join(", ")}
+                    hasMany: ${relationships["hasMany"].join(", ")}
                   </div>
                 </div>`
+
   string += modelString;
 }
 
@@ -311,9 +328,12 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
             var modelString = '';
 
             keys = orderKeysBasedOnRelationships(keys);
+            var startKey = 0;
 
             for (var j = 0; j < keys.length; j++) {
-              readLinesFromFile(keys, j, model)
+              var num = keys[j][0];
+              readLinesFromFile(keys, j, model, startKey === num ? false : true);
+              startKey = num;
             }
 
             string += addStringScript()

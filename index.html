@@ -61,7 +61,7 @@
         position: absolute;
         background: black;
         width: 40px;
-        height: 5px;
+        height: 3px;
         transform-origin: 0% 50%;
         transition: all 100ms cubic-bezier(.8,.5,1,.8);
         /*border-radius: 50%/100px 100px 0 0;*/
@@ -76,15 +76,25 @@
         content:'';
         border-top: 7px solid transparent;
         border-bottom: 8px solid transparent;
-        border-left: 14px solid black;
+        border-left: 20px solid red;
         transform: translate(40px, -5px);  
+      }
+
+      .row {        
+        text-align: center;
+      }
+
+      .row.offset .model {
+        width: 400px;
       }
     </style>
   </head>
   <body>
     <h1> Ember ERD Model Visualizer TEST4 </h1>
     <div class="models">
-<div class="model" data-model="user" data-belongsTo="" data-hasMany="pets battles gameStats">
+<div class='row'><div class="model" data-model="user" 
+                                     data-belongsTo="" 
+                                     data-hasMany="pets battles gameStats">
                   <div class="name">
                     user
                   </div>
@@ -96,7 +106,9 @@
                     <br />
                     hasMany: pets, battles, gameStats
                   </div>
-                </div><div class="model" data-model="pet" data-belongsTo="user" data-hasMany="stats battles petStates">
+                </div><div class="model" data-model="pet" 
+                                     data-belongsTo="user" 
+                                     data-hasMany="stats battles petStates">
                   <div class="name">
                     pet
                   </div>
@@ -108,7 +120,9 @@
                     <br />
                     hasMany: stats, battles, petStates
                   </div>
-                </div><div class="model" data-model="battle" data-belongsTo="state" data-hasMany="users pets">
+                </div></div><div class='row offset'><div class="model" data-model="battle" 
+                                     data-belongsTo="state" 
+                                     data-hasMany="users pets">
                   <div class="name">
                     battle
                   </div>
@@ -120,7 +134,9 @@
                     <br />
                     hasMany: users, pets
                   </div>
-                </div><div class="model" data-model="state" data-belongsTo="battle" data-hasMany="petStates">
+                </div></div><div class='row '><div class="model" data-model="state" 
+                                     data-belongsTo="battle" 
+                                     data-hasMany="petStates">
                   <div class="name">
                     state
                   </div>
@@ -132,7 +148,9 @@
                     <br />
                     hasMany: petStates
                   </div>
-                </div><div class="model" data-model="stat" data-belongsTo="pet" data-hasMany="">
+                </div></div><div class='row offset'><div class="model" data-model="stat" 
+                                     data-belongsTo="pet" 
+                                     data-hasMany="">
                   <div class="name">
                     stat
                   </div>
@@ -144,7 +162,9 @@
                     <br />
                     hasMany: 
                   </div>
-                </div><div class="model" data-model="petState" data-belongsTo="state pet" data-hasMany="">
+                </div><div class="model" data-model="petState" 
+                                     data-belongsTo="state pet" 
+                                     data-hasMany="">
                   <div class="name">
                     petState
                   </div>
@@ -156,7 +176,9 @@
                     <br />
                     hasMany: 
                   </div>
-                </div><div class="model" data-model="gameStat" data-belongsTo="user" data-hasMany="">
+                </div><div class="model" data-model="gameStat" 
+                                     data-belongsTo="user" 
+                                     data-hasMany="">
                   <div class="name">
                     gameStat
                   </div>
@@ -168,7 +190,9 @@
                     <br />
                     hasMany: 
                   </div>
-                </div><div class="model" data-model="balanceChange" data-belongsTo="" data-hasMany="">
+                </div><div class="model" data-model="balanceChange" 
+                                     data-belongsTo="" 
+                                     data-hasMany="">
                   <div class="name">
                     balanceChange
                   </div>
@@ -213,63 +237,61 @@
         hasMany = models[i].dataset.hasmany
         modelName = models[i].dataset.model
         var divFrom = models[i]
-        if (modelName === "user" || modelName === "battle") {
 
-          if (hasMany.length !== 0) {
-            // name is pluralized so remove s to search
-            var rels = hasMany.split(" ")
-            for (var j = 0; j <  rels.length; j++) {
+        if (hasMany.length !== 0) {
+          // name is pluralized so remove s to search
+          var rels = hasMany.split(" ")
+          for (var j = 0; j <  rels.length; j++) {
 
-              var toName = rels[j].slice(0, -1);
-              var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
+            var toName = rels[j].slice(0, -1);
+            var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
 
-              var divFromCoords = divFrom.getBoundingClientRect()
-              var divToCoords = divTo.getBoundingClientRect()
-              var divFromCenter = {
-                "x": divFromCoords.left + divFromCoords.width/2,
-                "y": divFromCoords.top + divFromCoords.height/2,
-              }
-
-              var divToCenter = {
-                "x": divToCoords.left + divToCoords.width/2,
-                "y": divToCoords.top + divToCoords.height/2,
-              }
-
-              // need to figure out where to put arrow,
-              // if the model from is above model to, then we aim for top of container
-              // if model from is below to (via top in coords), aim for the bottom of the model container
-              var newArrow = document.createElement("div"); 
-              newArrow.className += "arrow"
-              newArrow.className += " " + modelName + "_to_" + toName
-              newArrow.style.top = divFromCenter.y + "px";
-              newArrow.style.left = (divFromCenter.x) + "px"
-              // newArrow.style.bottom = divFromCoords.bottom + "px"
-              // newArrow.style.right = divFromCoords.right + "px";
-
-              var deg = angle({"x": divFromCenter.x,
-                             "y": divFromCenter.y
-                            }, 
-                          {"x": divToCenter.x, 
-                           "y": divToCenter.y
-                          });
-              
-              var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
-              
-              var prefixTransform = "transform";
-
-
-              newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
-              newArrow.style.width = distanceForArrow;
-              
-              document.body.appendChild(newArrow);
-
-              if (divFromCoords.top > divToCoords.top) {
-                // arrow needs to point down
-                
-              } else {
-                // arrow needs to point up
-              }                              
+            var divFromCoords = divFrom.getBoundingClientRect()
+            var divToCoords = divTo.getBoundingClientRect()
+            var divFromCenter = {
+              "x": divFromCoords.left + divFromCoords.width/2,
+              "y": divFromCoords.top + divFromCoords.height/2,
             }
+
+            var divToCenter = {
+              "x": divToCoords.left + divToCoords.width/2,
+              "y": divToCoords.top + divToCoords.height/2,
+            }
+
+            // need to figure out where to put arrow,
+            // if the model from is above model to, then we aim for top of container
+            // if model from is below to (via top in coords), aim for the bottom of the model container
+            var newArrow = document.createElement("div"); 
+            newArrow.className += "arrow"
+            newArrow.className += " " + modelName + "_to_" + toName
+            newArrow.style.top = divFromCenter.y + "px";
+            newArrow.style.left = (divFromCenter.x) + "px"
+            // newArrow.style.bottom = divFromCoords.bottom + "px"
+            // newArrow.style.right = divFromCoords.right + "px";
+
+            var deg = angle({"x": divFromCenter.x,
+                           "y": divFromCenter.y
+                          }, 
+                        {"x": divToCenter.x, 
+                         "y": divToCenter.y
+                        });
+            
+            var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
+            
+            var prefixTransform = "transform";
+
+
+            newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
+            newArrow.style.width = distanceForArrow;
+            
+            document.body.appendChild(newArrow);
+
+            if (divFromCoords.top > divToCoords.top) {
+              // arrow needs to point down
+              
+            } else {
+              // arrow needs to point up
+            }                              
           }
         }
         console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );

@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var async = require("async");
 var _ = require("underscore");
+Q = require('q');
 
 // {"user": "attributes": [], "relationships": {belongsTo: [""], hasMany: [""]}}
 
@@ -115,51 +116,101 @@ function readLines(data, func, model) {
   }
 }
 
-async.waterfall({
-  function() {
-    console.log('test one')
-  },
-  function() {
-    console.log('test two')
-  }
-})
+// async.waterfall([
+//   function readDir(readDirCallback) {
+//     console.log("reading directory")
+//     fs.readdir(path.resolve(__dirname, 'app/models/'), readDirCallback)
+//   }, function readFile(files, readFileCallback) {      
+//       for (var i = 0; i < files.length; i++) {
+//         console.log("reading file ", files[i]);
+//         fs.readFile(path.resolve(__dirname, "app/models/" + files[i]), "utf8", readFileCallback)
+//       }
+//   }, function writeFile(writeCallback) {
+//     console.log("writing")
+//   }
+// ], function(error) {
+//   if (error) {
+//     console.log(error);
+//   }
+// })
+
+// Q.nfcall(fs.readdir, path.resolve(__dirname, 'app/models/'))
+// .then(function(data) {
+//   console.log('files are', data);
+//   var promises = [];
+//   for (var i = 0; i < data.length; i++) {
+//     console.log("FILE IS", data[i])
+//     if (/\.js/.test(data[i])) {
+//       // (function() {
+//       //   var model = data[i].split(".")[0];
+//       //   models[model] = {
+//       //                   "attributes": [],
+//       //                   "relationships": {"belongsTo": [], "hasMany": []}
+//       //                 };
+//         // return Q.nfcall(fs.readFile, path.resolve(__dirname, "app/models/" + data[i]), "utf8"),
+//       (function() {
+//         promises.push(fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8")) 
+//         // return Q.nfcall(fs.readFile, path.resolve(__dirname, "app/models/" + data[i]), "utf8");
+//       })()
+//     }
+//     console.log(promises)
+//     return Q.allSettled(promises)
+//     // })()
+//   }
+// })
+// .then(function(data) {
+//   console.log('file is', data);
+// })
+// .fail(function(err) {
+//   console.log('error recorded:', err);
+// })
+// .done()
+
 
 fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
   if (err) {
     return console.log(err);
   }
 
-  // for (var i = 0; i < data.length; i++) {
-  //   if (/\.js/.test(data[i])) {
-  //     // console.log(data[i]);
+  for (var i = 0; i < data.length; i++) {
+    if (/\.js/.test(data[i])) {
+      // console.log(data[i]);
 
-  //     (function() {
-  //       // console.log(data[i])
-  //       var model = data[i].split(".")[0];
-  //       models[model] = {
-  //                       "attributes": [],
-  //                       "relationships": {"belongsTo": [], "hasMany": []}
-  //                     };
-  //       fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
-  //         // console.log("MODEL: ", model)
-  //         // console.log("FILE DATA: ", fileData)
-  //         readLines(fileData, func, model);
-  //           // console.log(models);          
-  //       })
-  //     })();
+      (function() {
+        // console.log(data[i])
+        var model = data[i].split(".")[0];
+        models[model] = {
+                        "attributes": [],
+                        "relationships": {"belongsTo": [], "hasMany": []}
+                      };
+        fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
+          // console.log("MODEL: ", model)
+          // console.log("FILE DATA: ", fileData)
+          readLines(fileData, func, model);
+            // console.log(models);
+        })
+      })();
 
 
-  //   }
-  // }
+    }
+  }
 
   var keys = _.keys(presetModels);
-  console.log(keys)
+  // console.log(keys)
 
   var modelString = '';
-
+// + "" + item.split[':'][1].split('(')[0].replace(')', '') 
   for (var j = 0; j < keys.length; j++) {
-    modelString = `<div class="model"><h1>Model Name: ${presetModels[keys[j]]}</h1><p>Attributes: </p><p>Relationships: </p></div>`
-    console.log(presetModels[keys[j]])
+    console.log(presetModels[keys[j]]["attributes"][0].trim().split(":"))
+    var items = _.map(presetModels[keys[j]]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " (" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + ")"})
+    // console.log(items)
+    // console.log(presetModels[keys[j]]["attributes"])
+    modelString = `<div class="model">
+                    <h1>Model Name: ${[keys[j]]}</h1>
+                    <p>Attributes: ${items}</p>
+                    <p>Relationships: </p>
+                  </div>`
+    // console.log(presetModels[keys[j]])
     string += modelString;
   }
 

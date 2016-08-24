@@ -65,6 +65,23 @@ var string = `<!DOCTYPE html>
         color: lightgrey;
         display: inline-block;
       }
+
+      .arrow {
+        position: absolute;
+        background: black;
+        width: 40px;
+        height: 5px;
+        transform-origin: 0% 50%;
+        transition: all 100ms cubic-bezier(.8,.5,1,.8);
+      }
+      .arrow:after {
+        display: block;
+        content:'';
+        border-top: 7px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid black;
+        transform: translate(40px, -5px);  
+      }
     </style>
   </head>
   <body>
@@ -78,13 +95,14 @@ function func(data, model) {
 
   if (/attr/.test(data) && !/import/.test(data)) {
     models[model]["attributes"].push(data);
-  } else if (/hasMany/.test(data) || /belongsTo/.test(data) && !/import/.test(data)) {
+  } else if ((/hasMany/.test(data) || /belongsTo/.test(data)) && !/import/.test(data)) {
+    var formattedData = data.trim().split(":")[0]
     if (/hasMany/.test(data)) {
-      console.log("PRITING OVER HERE MAN", data);
-      models[model]["relationships"]["hasMany"].push(data);
+      // console.log("PRITING OVER HERE MAN", data);
+      models[model]["relationships"]["hasMany"].push(formattedData);
     } else {
-      console.log("PRITING OVER HERE MAN", data);
-      models[model]["relationships"]["belongsTo"].push(data);
+      // console.log("PRITING OVER HERE MAN", formattedData);
+      models[model]["relationships"]["belongsTo"].push(formattedData);
     }
   }
   // return models
@@ -153,7 +171,9 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
               var relationships = models[keys[j]]["relationships"]
               // console.log(attributes)
               // console.log(models[keys[j]]["attributes"])
-              modelString = `<div class="model">
+              modelString = `<div class="model" data-model="${[keys[j]]}" data-belongsTo="${relationships[
+                                  "belongsTo"].join(" ")}" data-hasMany="${relationships[
+                                  "hasMany"].join(" ")}">
                               <div class="name">
                                 ${[keys[j]]}
                               </div>
@@ -161,14 +181,39 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
                                 ${attributes.join(" ")}
                               </div>
                               <div class="relations">
-                                ${relationships}
+                                belongsTo: ${relationships[
+                                  "belongsTo"].join(", ")}
+                                <br />
+                                hasMany: ${relationships[
+                                  "hasMany"].join(", ")}
                               </div>
                             </div>`
               // console.log(models[keys[j]])
               string += modelString;
             }
 
-            string += `</div></body></html>`
+            string += `
+                      <div class="arrow"></div>
+                      </div>
+                      <script>
+                        init = function() {                          
+                          console.log("started")
+                          var models = document.getElementsByClassName('model');
+                          var belongsTo, hasMany, modelName;
+                          for (var i =0; i < models.length; i++) {
+                            belongsTo = models[i].dataset.belongsto
+                            hasMany = models[i].dataset.hasmany
+                            modelName = models[i].dataset.model
+                            console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
+                          }
+                          console.log('finished')
+                        }
+
+                        window.onresize = init
+
+                        init()
+                      </script>
+                      </body></html>`
 
             fs.writeFile(path.resolve(__dirname, 'index.html'), string, function(err) {
               if (err) {

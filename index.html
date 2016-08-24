@@ -54,12 +54,29 @@
         color: lightgrey;
         display: inline-block;
       }
+
+      .arrow {
+        position: absolute;
+        background: black;
+        width: 40px;
+        height: 5px;
+        transform-origin: 0% 50%;
+        transition: all 100ms cubic-bezier(.8,.5,1,.8);
+      }
+      .arrow:after {
+        display: block;
+        content:'';
+        border-top: 7px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid black;
+        transform: translate(40px, -5px);  
+      }
     </style>
   </head>
   <body>
     <h1> Ember ERD Model Visualizer TEST2 </h1>
     <div class="models">
-<div class="model">
+<div class="model" data-model="balance-change" data-belongsTo="" data-hasMany="">
                               <div class="name">
                                 balance-change
                               </div>
@@ -67,9 +84,11 @@
                                  changeType <span class='attr-val'>string</span><br />  entryDate <span class='attr-val'>string</span><br />  value <span class='attr-val'>number</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: 
+                                <br />
+                                hasMany: 
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="battle" data-belongsTo="state" data-hasMany="users pets">
                               <div class="name">
                                 battle
                               </div>
@@ -77,9 +96,11 @@
                                  winnerId <span class='attr-val'>number</span><br />  loserId <span class='attr-val'>number</span><br />  winnerEmail <span class='attr-val'>string</span><br />  loserEmail <span class='attr-val'>string</span><br />  name <span class='attr-val'>string</span><br />  challengedEmail <span class='attr-val'>string</span><br />  challengerEmail <span class='attr-val'>string</span><br />  status <span class='attr-val'>string</span><br />  challengerPetId <span class='attr-val'>string</span><br />  challengedPetId <span class='attr-val'>string</span><br />  challengerPet <span class='attr-val'></span><br />  challengedPet <span class='attr-val'></span><br />  currentTurn <span class='attr-val'>number</span><br />  currentTurnEmail <span class='attr-val'>string</span><br />  createdAt <span class='attr-val'>string</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: state
+                                <br />
+                                hasMany: users, pets
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="game-stat" data-belongsTo="user" data-hasMany="">
                               <div class="name">
                                 game-stat
                               </div>
@@ -87,9 +108,11 @@
                                  name <span class='attr-val'>string</span><br />  value <span class='attr-val'>number</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: user
+                                <br />
+                                hasMany: 
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="pet-state" data-belongsTo="state pet" data-hasMany="">
                               <div class="name">
                                 pet-state
                               </div>
@@ -97,9 +120,11 @@
                                  currentHealth <span class='attr-val'>number</span><br />  currentAttack <span class='attr-val'>number</span><br />  currentDefence <span class='attr-val'>number</span><br />  shield <span class='attr-val'>boolean</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: state, pet
+                                <br />
+                                hasMany: 
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="pet" data-belongsTo="user" data-hasMany="stats battles petStates">
                               <div class="name">
                                 pet
                               </div>
@@ -107,9 +132,11 @@
                                  name <span class='attr-val'>string</span><br />  level <span class='attr-val'>number</span><br />  vertices <span class='attr-val'>number</span><br />  colour <span class='attr-val'>string</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: user
+                                <br />
+                                hasMany: stats, battles, petStates
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="stat" data-belongsTo="pet" data-hasMany="">
                               <div class="name">
                                 stat
                               </div>
@@ -117,19 +144,23 @@
                                  statType <span class='attr-val'>string</span><br />  value <span class='attr-val'>number</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: pet
+                                <br />
+                                hasMany: 
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="state" data-belongsTo="" data-hasMany="">
                               <div class="name">
                                 state
                               </div>
                               <div class="attrs">
-                                 name <span class='attr-val'>string</span><br />  currentTurn <span class='attr-val'>integer</span><br />
+                                
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: 
+                                <br />
+                                hasMany: 
                               </div>
-                            </div><div class="model">
+                            </div><div class="model" data-model="user" data-belongsTo="" data-hasMany="pets battles gameStats">
                               <div class="name">
                                 user
                               </div>
@@ -137,6 +168,55 @@
                                  currency <span class='attr-val'>string</span><br />  email <span class='attr-val'>string</span><br />  uid <span class='attr-val'>string</span><br />  nickname <span class='attr-val'>string</span><br />  image <span class='attr-val'>string</span><br />  online <span class='attr-val'>boolean</span><br />
                               </div>
                               <div class="relations">
-                                [object Object]
+                                belongsTo: 
+                                <br />
+                                hasMany: pets, battles, gameStats
                               </div>
-                            </div></div></body></html>
+                            </div>
+                      </div>
+                      <script>
+                        init = function() {                          
+                          console.log("started")
+                          var models = document.getElementsByClassName('model');
+                          var belongsTo, hasMany, modelName;
+                          for (var i =0; i < models.length; i++) {
+                            belongsTo = models[i].dataset.belongsto
+                            hasMany = models[i].dataset.hasmany
+                            modelName = models[i].dataset.model
+                            var divFrom = models[i]
+                            if (hasMany.length !== 0) {
+                              // name is pluralized so remove s to search
+                              var toName = hasMany.split(" ")[0].slice(0, -1);
+                              var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
+
+                              var divFromCoords = divFrom.getBoundingClientRect()
+                              var divToCoords = divTo.getBoundingClientRect()
+
+                              // need to figure out where to put arrow,
+                              // if the model from is above model to, then we aim for top of container
+                              // if model from is below to (via top in coords), aim for the bottom of the model container
+                              var newArrow = document.createElement("div"); 
+                              newArrow.className += "arrow"
+                              newArrow.className += ` ${modelName}_to_${toName}`
+                              newArrow.style.top = `${divFromCoords.top}px`;
+                              // newArrow.style.left = divFromCoords.left;
+                              newArrow.style.right = `${divFromCoords.right}px`;
+                              document.body.appendChild(newArrow);
+
+                              if (divFromCoords.top > divToCoords.top) {
+                                // arrow needs to point down
+                                
+                              } else {
+                                // arrow needs to point up
+                              }                              
+                            }
+                            console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
+                          }
+                          console.log('finished')
+                        }
+
+                        window.onresize = init
+
+                        init()
+                      </script>
+                      </body></html>

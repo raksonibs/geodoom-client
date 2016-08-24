@@ -7,7 +7,7 @@ export default Ember.Route.extend(HomePropertiesMixin, {
       battles: this.store.findAll('battle'),
       users: this.store.findAll('user'),
       pets: this.store.findAll('pet'),
-    })
+    });
   },
 
   setupController(controller, models) {

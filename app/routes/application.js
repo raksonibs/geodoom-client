@@ -5,8 +5,8 @@ const { service } = Ember.inject;
 
 //sessionAuthetnicated is a method called by simpleauth's applicationroutemixin when user authenticated
 export default Ember.Route.extend(ApplicationRouteMixin, { 
-  session: Ember.inject.service(),
-  authenticatedAjax: Ember.inject.service(),
+  session: service(),
+  authenticatedAjax: service(),
   sessionAuthenticated() {
     this._super(...arguments);
     this.loadUser();

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model(params, transition) {
+  model() {
     return Ember.RSVP.hash({
       battle: this.store.createRecord('battle'),
       users: this.store.findAll('user')

@@ -1,3 +1,4 @@
+// jshint ignore: start
 import Provider from 'torii/providers/base';
 import {configurable} from 'torii/configuration';
 import QueryString from 'torii/lib/query-string';
@@ -23,12 +24,8 @@ export default Ember.Object.extend({
         state = state,
         shouldCheckState = responseParams.indexOf('state') !== -1;
 
-    debugger
-
     return this.get('popup').open(url, responseParams, options).then(function(authData){
       var missingResponseParams = [];
-      
-      debugger      
 
       return {
         authorizationCode: authData[responseType],
@@ -38,3 +35,4 @@ export default Ember.Object.extend({
     });
   }
 });
+// jshint ignore: end

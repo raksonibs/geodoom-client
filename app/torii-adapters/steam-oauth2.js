@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.Object.extend({
   store: Ember.inject.service(), // inject the ember-data store
   session: Ember.inject.service(),

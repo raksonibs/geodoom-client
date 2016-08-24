@@ -1,3 +1,4 @@
+// jshint ignore: start
 export default Ember.Object.extend({
   open: function(authentication){
     return new Ember.RSVP.Promise(function(resolve, reject){
@@ -30,3 +31,4 @@ export default Ember.Object.extend({
     
   }
 });
+// jshint ignore: end

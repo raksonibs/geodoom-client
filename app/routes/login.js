@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
-import ENV from "../config/environment";
+// import ENV from "../config/environment";
 // unathetnicated route makes it accesible to not logged in users and redirects them to routeifalreadyauthenticated if oggedin
 export default Ember.Route.extend(UnauthenticatedRouteMixin, { 
   session: Ember.inject.service(),
@@ -16,9 +16,7 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
     login2() {
       var route = this,
           controller = this.controllerFor('login'),
-          thisState = this;
-
-      const user = this.store.findRecord('user', 5);
+          thisState = this;      
 
       // The provider name is passed to `open`
       this.get('sessionTorii').open('steam-oauth2').then(function(user){         

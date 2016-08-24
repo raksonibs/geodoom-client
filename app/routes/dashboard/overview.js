@@ -4,12 +4,10 @@ export default Ember.Route.extend({
   session: Ember.inject.service(),
   actions: {
     linkSteam() {
-      var route = this,
-          controller = this.controllerFor('login'),
-          thisState = this;
+      var controller = this.controllerFor('login')
 
       // The provider name is passed to `open`
-      this.get('sessionTorii').open('steam-oauth2').then(function(user) {
+      this.get('sessionTorii').open('steam-oauth2').then(function() {
           // route.transitionTo('dashboard.overview');
           this.refresh();
       }, function(error){

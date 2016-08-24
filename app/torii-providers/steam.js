@@ -1,3 +1,4 @@
+// jshint ignore: start
 function createCORSRequest(method, url) {
   var xhr = new XMLHttpRequest();
   if ("withCredentials" in xhr) {
@@ -55,3 +56,4 @@ export default Ember.Object.extend({
     
   }
 });
+// jshint ignore: end

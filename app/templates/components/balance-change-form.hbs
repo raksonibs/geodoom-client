@@ -8,7 +8,7 @@
 {{pikaday-input value=valueForDate}}
 {{!-- why do i need target.value --}}
 <input value={{valueForInput}} oninput={{action 'updateFormInput' value="target.value"}} autofocus>
-<button onclick={{action (action save balanceChange)}} disabled={{isDisabled}}>
+<button onclick={{action (action 'save' balanceChange)}} disabled={{isDisabled}}>
 {{#if balanceChange.isSaving}}
   Saving
 {{else}}

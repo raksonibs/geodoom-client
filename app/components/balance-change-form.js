@@ -7,7 +7,9 @@ export default Ember.Component.extend({
     this._super(...arguments);
     const valueForInput = this.get('balanceChange.value') ? this.formatValue(this.get('balanceChange.value')) : null
     this.set('valueForInput', valueForInput);
-    this.set('balanceChangeData', this.get('balanceChange').getProperties('value', 'entryDate'))
+    if (this.get('balanceChange') !== undefined) {      
+      this.set('balanceChangeData', this.get('balanceChange').getProperties('value', 'entryDate'))
+    }
   },
 
   formatData(value) {
@@ -42,6 +44,10 @@ export default Ember.Component.extend({
   actions: {
     updateFormInput(value) {
       this.set('balanceChange.value', this.unformatData(value))
+    },
+
+    save(balanceChange) {
+      
     }
   }
 });

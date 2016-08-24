@@ -6,39 +6,137 @@
     <title>Ember ERD</title>
     <meta name='description' content=''>
     <meta name='viewport' content='width=device-width', initial-scale='1'>
+    <style>
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+      }
+
+      .models {
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        flex-wrap: wrap;
+      }
+
+      .model {
+        // display: inline-block;
+        border: 1px solid black;
+        width: 400px;
+        // height: 200px;
+        margin: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+      }
+
+      .model .name,
+      .model .attrs,
+      .model .relations {        
+        width: 32%;
+        display: inline-block;
+        margin: 10px;
+      }
+
+      .model .name,
+      .model .attrs {
+        border-right: 1px solid black;
+        height: 100%;
+      }
+
+      .model .name {        
+        font-weight: 900;
+      }
+
+      .model .attrs .attr-val {
+        color: lightgrey;
+        display: inline-block;
+      }
+    </style>
   </head>
   <body>
     <h1> Ember ERD Model Visualizer TEST2 </h1>
+    <div class="models">
 <div class="model">
-                              <h1>Model Name: balance-change</h1>
-                              <p>Attributes:  changeType (string), entryDate (string), value (number)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                balance-change
+                              </div>
+                              <div class="attrs">
+                                 changeType <span class='attr-val'>string</span><br />  entryDate <span class='attr-val'>string</span><br />  value <span class='attr-val'>number</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: battle</h1>
-                              <p>Attributes:  winnerId (number), loserId (number), winnerEmail (string), loserEmail (string), name (string), challengedEmail (string), challengerEmail (string), status (string), challengerPetId (string), challengedPetId (string), challengerPet (), challengedPet (), currentTurn (number), currentTurnEmail (string), createdAt (string)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                battle
+                              </div>
+                              <div class="attrs">
+                                 winnerId <span class='attr-val'>number</span><br />  loserId <span class='attr-val'>number</span><br />  winnerEmail <span class='attr-val'>string</span><br />  loserEmail <span class='attr-val'>string</span><br />  name <span class='attr-val'>string</span><br />  challengedEmail <span class='attr-val'>string</span><br />  challengerEmail <span class='attr-val'>string</span><br />  status <span class='attr-val'>string</span><br />  challengerPetId <span class='attr-val'>string</span><br />  challengedPetId <span class='attr-val'>string</span><br />  challengerPet <span class='attr-val'></span><br />  challengedPet <span class='attr-val'></span><br />  currentTurn <span class='attr-val'>number</span><br />  currentTurnEmail <span class='attr-val'>string</span><br />  createdAt <span class='attr-val'>string</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: game-stat</h1>
-                              <p>Attributes:  name (string), value (number)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                game-stat
+                              </div>
+                              <div class="attrs">
+                                 name <span class='attr-val'>string</span><br />  value <span class='attr-val'>number</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: pet-state</h1>
-                              <p>Attributes:  currentHealth (number), currentAttack (number), currentDefence (number), shield (boolean)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                pet-state
+                              </div>
+                              <div class="attrs">
+                                 currentHealth <span class='attr-val'>number</span><br />  currentAttack <span class='attr-val'>number</span><br />  currentDefence <span class='attr-val'>number</span><br />  shield <span class='attr-val'>boolean</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: pet</h1>
-                              <p>Attributes:  name (string), level (number), vertices (number), colour (string)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                pet
+                              </div>
+                              <div class="attrs">
+                                 name <span class='attr-val'>string</span><br />  level <span class='attr-val'>number</span><br />  vertices <span class='attr-val'>number</span><br />  colour <span class='attr-val'>string</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: stat</h1>
-                              <p>Attributes:  statType (string), value (number)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                stat
+                              </div>
+                              <div class="attrs">
+                                 statType <span class='attr-val'>string</span><br />  value <span class='attr-val'>number</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: state</h1>
-                              <p>Attributes:  name (string), currentTurn (integer)</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                state
+                              </div>
+                              <div class="attrs">
+                                 name <span class='attr-val'>string</span><br />  currentTurn <span class='attr-val'>integer</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
                             </div><div class="model">
-                              <h1>Model Name: user</h1>
-                              <p>Attributes:  currency (string), email (string), uid (string), nickname (string), image (string), online (boolean)</p>
-                              <p>Relationships: </p>
-                            </div></body></html>
+                              <div class="name">
+                                user
+                              </div>
+                              <div class="attrs">
+                                 currency <span class='attr-val'>string</span><br />  email <span class='attr-val'>string</span><br />  uid <span class='attr-val'>string</span><br />  nickname <span class='attr-val'>string</span><br />  image <span class='attr-val'>string</span><br />  online <span class='attr-val'>boolean</span><br />
+                              </div>
+                              <div class="relations">
+                                [object Object]
+                              </div>
+                            </div></div></body></html>

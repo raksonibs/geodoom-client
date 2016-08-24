@@ -17,9 +17,59 @@ var string = `<!DOCTYPE html>
     <title>Ember ERD</title>
     <meta name='description' content=''>
     <meta name='viewport' content='width=device-width', initial-scale='1'>
+    <style>
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+      }
+
+      .models {
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        flex-wrap: wrap;
+      }
+
+      .model {
+        // display: inline-block;
+        border: 1px solid black;
+        width: 400px;
+        // height: 200px;
+        margin: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+      }
+
+      .model .name,
+      .model .attrs,
+      .model .relations {        
+        width: 32%;
+        display: inline-block;
+        margin: 10px;
+      }
+
+      .model .name,
+      .model .attrs {
+        border-right: 1px solid black;
+        height: 100%;
+      }
+
+      .model .name {        
+        font-weight: 900;
+      }
+
+      .model .attrs .attr-val {
+        color: lightgrey;
+        display: inline-block;
+      }
+    </style>
   </head>
   <body>
     <h1> Ember ERD Model Visualizer TEST2 </h1>
+    <div class="models">
 `
 
 function func(data, model) {
@@ -29,10 +79,11 @@ function func(data, model) {
   if (/attr/.test(data) && !/import/.test(data)) {
     models[model]["attributes"].push(data);
   } else if (/hasMany/.test(data) || /belongsTo/.test(data) && !/import/.test(data)) {
-    if (/hasMany/.test(data)) {      
+    if (/hasMany/.test(data)) {
+      console.log("PRITING OVER HERE MAN", data);
       models[model]["relationships"]["hasMany"].push(data);
     } else {
-      // console.log("PRITING OVER HERE MAN", data);
+      console.log("PRITING OVER HERE MAN", data);
       models[model]["relationships"]["belongsTo"].push(data);
     }
   }
@@ -94,22 +145,30 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
           // + "" + item.split[':'][1].split('(')[0].replace(')', '') 
             for (var j = 0; j < keys.length; j++) {
               if (models[keys[j]]["attributes"] !== undefined) {      
-                var items = _.map(models[keys[j]]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " (" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + ")"})
+                var attributes = _.map(models[keys[j]]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " <span class='attr-val'>" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + "</span><br />"})
               } else {
-                var items = models[keys[j]]["attributes"]
+                var attributes = models[keys[j]]["attributes"]
               }
-              // console.log(items)
+
+              var relationships = models[keys[j]]["relationships"]
+              // console.log(attributes)
               // console.log(models[keys[j]]["attributes"])
               modelString = `<div class="model">
-                              <h1>Model Name: ${[keys[j]]}</h1>
-                              <p>Attributes: ${items}</p>
-                              <p>Relationships: </p>
+                              <div class="name">
+                                ${[keys[j]]}
+                              </div>
+                              <div class="attrs">
+                                ${attributes.join(" ")}
+                              </div>
+                              <div class="relations">
+                                ${relationships}
+                              </div>
                             </div>`
               // console.log(models[keys[j]])
               string += modelString;
             }
 
-            string += `</body></html>`
+            string += `</div></body></html>`
 
             fs.writeFile(path.resolve(__dirname, 'index.html'), string, function(err) {
               if (err) {

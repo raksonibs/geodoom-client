@@ -214,7 +214,7 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
             string += `                      
                       </div>
                       <script>
-                      function angle(p1,p2) { 
+                        function angle(p1,p2) { 
                           var dx=p2.x-p1.x,
                               dy=p2.y-p1.y,
                               c=Math.sqrt(dx*dx+dy*dy),
@@ -222,6 +222,10 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
                           deg=(c>0) ? Math.asin(dy/c)/(Math.PI/180) : 0;
                           deg=(dx>0) ? deg : 180-deg;  
                           return (deg).toFixed(2); 
+                        }
+
+                        function pythagoras(point1, point2) {
+                          return (Math.sqrt(Math.pow(Math.abs(point1.x-point2.x), 2) + Math.pow(Math.abs(point1.y-point2.y), 2)))
                         }
 
                         init = function() {
@@ -240,46 +244,64 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
                             hasMany = models[i].dataset.hasmany
                             modelName = models[i].dataset.model
                             var divFrom = models[i]
+                            if (modelName === "user" || modelName === "battle") {
 
-                            if (hasMany.length !== 0) {
-                              // name is pluralized so remove s to search
-                              var toName = hasMany.split(" ")[0].slice(0, -1);
-                              var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
+                              if (hasMany.length !== 0) {
+                                // name is pluralized so remove s to search
+                                var rels = hasMany.split(" ")
+                                for (var j = 0; j <  rels.length; j++) {
 
-                              var divFromCoords = divFrom.getBoundingClientRect()
-                              var divToCoords = divTo.getBoundingClientRect()
+                                  var toName = rels[j].slice(0, -1);
+                                  var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
 
-                              // need to figure out where to put arrow,
-                              // if the model from is above model to, then we aim for top of container
-                              // if model from is below to (via top in coords), aim for the bottom of the model container
-                              var newArrow = document.createElement("div"); 
-                              newArrow.className += "arrow"
-                              newArrow.className += " " + modelName + "_to_" + toName
-                              newArrow.style.top = divFromCoords.top + "px";
-                              newArrow.style.left = (divFromCoords.left + divFromCoords.width/2) + "px"
-                              newArrow.style.bottom = divFromCoords.bottom + "px"
-                              newArrow.style.right = divFromCoords.right + "px";
-                              var distanceForArrow = Math.abs(divFromCoords.left - divToCoords.right) - divFromCoords.width/2+ "px"
-                              var prefixTransform = "transform";
+                                  var divFromCoords = divFrom.getBoundingClientRect()
+                                  var divToCoords = divTo.getBoundingClientRect()
+                                  var divFromCenter = {
+                                    "x": divFromCoords.left + divFromCoords.width/2,
+                                    "y": divFromCoords.top + divFromCoords.height/2,
+                                  }
 
-                              var deg = angle({"x": divFromCoords.left,
-                                             "y": divFromCoords.top
-                                            }, 
-                                          {"x": divToCoords.left, 
-                                           "y": divToCoords.top
-                                          });
+                                  var divToCenter = {
+                                    "x": divToCoords.left + divToCoords.width/2,
+                                    "y": divToCoords.top + divToCoords.height/2,
+                                  }
 
-                              newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
-                              newArrow.style.width = distanceForArrow;
-                              
-                              document.body.appendChild(newArrow);
+                                  // need to figure out where to put arrow,
+                                  // if the model from is above model to, then we aim for top of container
+                                  // if model from is below to (via top in coords), aim for the bottom of the model container
+                                  var newArrow = document.createElement("div"); 
+                                  newArrow.className += "arrow"
+                                  newArrow.className += " " + modelName + "_to_" + toName
+                                  newArrow.style.top = divFromCenter.y + "px";
+                                  newArrow.style.left = (divFromCenter.x) + "px"
+                                  // newArrow.style.bottom = divFromCoords.bottom + "px"
+                                  // newArrow.style.right = divFromCoords.right + "px";
 
-                              if (divFromCoords.top > divToCoords.top) {
-                                // arrow needs to point down
-                                
-                              } else {
-                                // arrow needs to point up
-                              }                              
+                                  var deg = angle({"x": divFromCenter.x,
+                                                 "y": divFromCenter.y
+                                                }, 
+                                              {"x": divToCenter.x, 
+                                               "y": divToCenter.y
+                                              });
+                                  
+                                  var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
+                                  
+                                  var prefixTransform = "transform";
+
+
+                                  newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
+                                  newArrow.style.width = distanceForArrow;
+                                  
+                                  document.body.appendChild(newArrow);
+
+                                  if (divFromCoords.top > divToCoords.top) {
+                                    // arrow needs to point down
+                                    
+                                  } else {
+                                    // arrow needs to point up
+                                  }                              
+                                }
+                              }
                             }
                             console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
                           }

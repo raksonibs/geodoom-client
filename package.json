@@ -55,5 +55,10 @@
     "liquid-fire": "0.24.1",
     "loader.js": "^4.0.1",
     "torii": "0.8.0"
+  },
+  "dependencies": {
+    "async": "^2.0.1",
+    "requirejs": "^2.2.0",
+    "underscore": "^1.8.3"
   }
 }

@@ -1,3 +1,4 @@
+
 var requirejs = require('requirejs');
 var fs = require('fs');
 var path = require('path');
@@ -6,6 +7,11 @@ var _ = require("underscore");
 Q = require('q');
 
 // {"user": "attributes": [], "relationships": {belongsTo: [""], hasMany: [""]}}
+
+
+var capitalize = function(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 var models = {}
 
@@ -40,7 +46,7 @@ var string = `<!DOCTYPE html>
         display: flex;
         align-items: center;
         justify-content: center;
-        
+        z-index: 100;
       }
 
       .model .name,
@@ -49,6 +55,7 @@ var string = `<!DOCTYPE html>
         width: 32%;
         display: inline-block;
         margin: 10px;
+        z-index: 100;
       }
 
       .model .name,
@@ -73,7 +80,13 @@ var string = `<!DOCTYPE html>
         height: 5px;
         transform-origin: 0% 50%;
         transition: all 100ms cubic-bezier(.8,.5,1,.8);
+        /*border-radius: 50%/100px 100px 0 0;*/
+        background-image/*: url("http://www.iconsdb.com/icons/preview/black/arrow-18-xxl.png");
+        background-size: cover;
+        background-posit*/ion: center;
+        z-index: -1000;
       }
+
       .arrow:after {
         display: block;
         content:'';
@@ -85,7 +98,7 @@ var string = `<!DOCTYPE html>
     </style>
   </head>
   <body>
-    <h1> Ember ERD Model Visualizer TEST2 </h1>
+    <h1> Ember ERD Model Visualizer TEST3 </h1>
     <div class="models">
 `
 
@@ -139,7 +152,13 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
 
       (function() {
         // console.log(data[i])
-        var model = data[i].split(".")[0];
+        var model = data[i].split(".")[0].split("-");
+        if (model.length >= 2) {
+          model = model[0] + capitalize(model[1]);
+        } else {
+          model = model[0];
+        }
+
         models[model] = {
                         "attributes": [],
                         "relationships": {"belongsTo": [], "hasMany": []}
@@ -192,11 +211,27 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
               string += modelString;
             }
 
-            string += `
-                      <div class="arrow"></div>
+            string += `                      
                       </div>
                       <script>
-                        init = function() {                          
+                      function angle(p1,p2) { 
+                          var dx=p2.x-p1.x,
+                              dy=p2.y-p1.y,
+                              c=Math.sqrt(dx*dx+dy*dy),
+                              deg;
+                          deg=(c>0) ? Math.asin(dy/c)/(Math.PI/180) : 0;
+                          deg=(dx>0) ? deg : 180-deg;  
+                          return (deg).toFixed(2); 
+                        }
+
+                        init = function() {
+                          var arrows = document.getElementsByClassName('arrow');
+
+                          for (var i = 0; i < arrows.length; i++) {
+                            (function() {
+                              arrows[i].remove();
+                            })()
+                          };
                           console.log("started")
                           var models = document.getElementsByClassName('model');
                           var belongsTo, hasMany, modelName;
@@ -204,6 +239,48 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
                             belongsTo = models[i].dataset.belongsto
                             hasMany = models[i].dataset.hasmany
                             modelName = models[i].dataset.model
+                            var divFrom = models[i]
+
+                            if (hasMany.length !== 0) {
+                              // name is pluralized so remove s to search
+                              var toName = hasMany.split(" ")[0].slice(0, -1);
+                              var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
+
+                              var divFromCoords = divFrom.getBoundingClientRect()
+                              var divToCoords = divTo.getBoundingClientRect()
+
+                              // need to figure out where to put arrow,
+                              // if the model from is above model to, then we aim for top of container
+                              // if model from is below to (via top in coords), aim for the bottom of the model container
+                              var newArrow = document.createElement("div"); 
+                              newArrow.className += "arrow"
+                              newArrow.className += " " + modelName + "_to_" + toName
+                              newArrow.style.top = divFromCoords.top + "px";
+                              newArrow.style.left = (divFromCoords.left + divFromCoords.width/2) + "px"
+                              newArrow.style.bottom = divFromCoords.bottom + "px"
+                              newArrow.style.right = divFromCoords.right + "px";
+                              var distanceForArrow = Math.abs(divFromCoords.left - divToCoords.right) - divFromCoords.width/2+ "px"
+                              var prefixTransform = "transform";
+
+                              var deg = angle({"x": divFromCoords.left,
+                                             "y": divFromCoords.top
+                                            }, 
+                                          {"x": divToCoords.left, 
+                                           "y": divToCoords.top
+                                          });
+
+                              newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
+                              newArrow.style.width = distanceForArrow;
+                              
+                              document.body.appendChild(newArrow);
+
+                              if (divFromCoords.top > divToCoords.top) {
+                                // arrow needs to point down
+                                
+                              } else {
+                                // arrow needs to point up
+                              }                              
+                            }
                             console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
                           }
                           console.log('finished')

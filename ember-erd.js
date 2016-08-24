@@ -6,9 +6,6 @@ var async = require("async");
 var _ = require("underscore");
 Q = require('q');
 
-// {"user": "attributes": [], "relationships": {belongsTo: [""], hasMany: [""]}}
-
-
 var capitalize = function(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -31,19 +28,21 @@ var string = `<!DOCTYPE html>
       }
 
       .models {
-        display: flex;
+        /*display: flex;
         flex-direction: row;
         overflow-x: scroll;
-        flex-wrap: wrap;
+        flex-wrap: wrap;*/
+        display: block;
+
       }
 
       .model {
-        // display: inline-block;
+        display: inline-block;
         border: 1px solid black;
         width: 400px;
         // height: 200px;
         margin: 20px;
-        display: flex;
+        /*display: flex;*/
         align-items: center;
         justify-content: center;
         z-index: 100;
@@ -52,16 +51,15 @@ var string = `<!DOCTYPE html>
       .model .name,
       .model .attrs,
       .model .relations {        
-        width: 32%;
+        width: 30%;
         display: inline-block;
-        margin: 10px;
+        padding: 2px;
         z-index: 100;
       }
 
-      .model .name,
       .model .attrs {
+        border-left: 1px solid black;
         border-right: 1px solid black;
-        height: 100%;
       }
 
       .model .name {        
@@ -81,9 +79,9 @@ var string = `<!DOCTYPE html>
         transform-origin: 0% 50%;
         transition: all 100ms cubic-bezier(.8,.5,1,.8);
         /*border-radius: 50%/100px 100px 0 0;*/
-        background-image/*: url("http://www.iconsdb.com/icons/preview/black/arrow-18-xxl.png");
+        /*background-image: url("http://www.iconsdb.com/icons/preview/black/arrow-18-xxl.png");
         background-size: cover;
-        background-posit*/ion: center;
+        background-position: center;*/
         z-index: -1000;
       }
 
@@ -98,7 +96,7 @@ var string = `<!DOCTYPE html>
     </style>
   </head>
   <body>
-    <h1> Ember ERD Model Visualizer TEST3 </h1>
+    <h1> Ember ERD Model Visualizer TEST4 </h1>
     <div class="models">
 `
 
@@ -207,23 +205,32 @@ return `
   </body></html>`
 }
 
-function addToModels(data, model) {
-  // console.log("LINE: " + data);
+function addToModels(data, model) {  
   var data = data.trim().replace(",", '');
 
   if (/attr/.test(data) && !/import/.test(data)) {
     models[model]["attributes"].push(data);
   } else if ((/hasMany/.test(data) || /belongsTo/.test(data)) && !/import/.test(data)) {
     var formattedData = data.trim().split(":")[0]
-    if (/hasMany/.test(data)) {
-      // console.log("PRITING OVER HERE MAN", data);
+    if (/hasMany/.test(data)) {      
       models[model]["relationships"]["hasMany"].push(formattedData);
-    } else {
-      // console.log("PRITING OVER HERE MAN", formattedData);
+    } else {      
       models[model]["relationships"]["belongsTo"].push(formattedData);
     }
+  }  
+}
+
+function orderKeysBasedOnRelationships(keys) {
+  var modelArray = [];
+  for (var i = 0; i < keys.length; i++) {
+    var numRelationships = [models[keys[i]].relationships.hasMany.length, keys[i]]
+
+    modelArray.push(numRelationships)
   }
-  // return models
+
+  var newKeys = _.sortBy(modelArray, function(key) { return key[0] })
+  
+  return newKeys.reverse();
 }
 
 function readLines(data, addToModels, model) {
@@ -247,18 +254,19 @@ function readLines(data, addToModels, model) {
 }
 
 function readLinesFromFile(keys, j, model) {
-  if (models[keys[j]]["attributes"] !== undefined) {      
-    var attributes = _.map(models[keys[j]]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " <span class='attr-val'>" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + "</span><br />"})
+  var key = keys[j][1];
+  if (models[key]["attributes"] !== undefined) {      
+    var attributes = _.map(models[key]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " <span class='attr-val'>" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + "</span><br />"})
   } else {
-    var attributes = models[keys[j]]["attributes"]
+    var attributes = models[key]["attributes"]
   }
 
-  var relationships = models[keys[j]]["relationships"]
-  modelString = `<div class="model" data-model="${[keys[j]]}" data-belongsTo="${relationships[
+  var relationships = models[key]["relationships"]
+  modelString = `<div class="model" data-model="${[key]}" data-belongsTo="${relationships[
                       "belongsTo"].join(" ")}" data-hasMany="${relationships[
                       "hasMany"].join(" ")}">
                   <div class="name">
-                    ${[keys[j]]}
+                    ${[key]}
                   </div>
                   <div class="attrs">
                     ${attributes.join(" ")}
@@ -297,11 +305,12 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
         fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
           readLines(fileData, addToModels, model);
 
-          if (data[data.length - 1].split(".")[0] === model) {
-            console.log('DONEDONEONDONDONE')
+          if (data[data.length - 1].split(".")[0] === model) {            
             var keys = _.keys(models);
 
             var modelString = '';
+
+            keys = orderKeysBasedOnRelationships(keys);
 
             for (var j = 0; j < keys.length; j++) {
               readLinesFromFile(keys, j, model)

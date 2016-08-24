@@ -1,0 +1,56 @@
+{ balance_change:
+   { attributes:
+      [ 'changeType: attr(\'string\')',
+        'entryDate: attr(\'string\')',
+        'value: attr(\'number\')' ],
+     relationships: { belongsTo: [], hasMany: [Object] } },
+  battle:
+   { attributes:
+      [ 'winnerId: attr(\'number\')',
+        'loserId: attr(\'number\')',
+        'winnerEmail: attr(\'string\')',
+        'loserEmail: attr(\'string\')',
+        'name: attr(\'string\')',
+        'challengedEmail: attr(\'string\')',
+        'challengerEmail: attr(\'string\')',
+        'status: attr(\'string\')',
+        'challengerPetId: attr(\'string\')',
+        'challengedPetId: attr(\'string\')',
+        'challengerPet: attr()',
+        'challengedPet: attr()',
+        'currentTurn: attr(\'number\')',
+        'currentTurnEmail: attr(\'string\')',
+        'createdAt: attr(\'string\')' ],
+     relationships: { belongsTo: [Object], hasMany: [Object] } },
+  game_stat:
+   { attributes: [ 'name: attr(\'string\')', 'value: attr(\'number\')' ],
+     relationships: { belongsTo: [Object], hasMany: [Object] } },
+  pet_state:
+   { attributes:
+      [ 'currentHealth: attr(\'number\')',
+        'currentAttack: attr(\'number\')',
+        'currentDefence: attr(\'number\')',
+        'shield: attr(\'boolean\')' ],
+     relationships: { belongsTo: [Object], hasMany: [Object] } },
+  pet:
+   { attributes:
+      [ 'name: attr(\'string\')',
+        'level: attr(\'number\')',
+        'vertices: attr(\'number\')',
+        'colour: attr(\'string\')' ],
+     relationships: { belongsTo: [Object], hasMany: [Object] } },
+  stat:
+   { attributes: [ 'statType: attr(\'string\')', 'value: attr(\'number\')' ],
+     relationships: { belongsTo: [Object], hasMany: [Object] } },
+  state:
+   { attributes: [ 'name: attr(\'string\')', 'currentTurn: attr(\'integer\')' ],
+     relationships: { belongsTo: [Object], hasMany: [Object] } },
+  user:
+   { attributes:
+      [ 'currency: attr(\'string\')',
+        'email: attr(\'string\')',
+        'uid: attr(\'string\')',
+        'nickname: attr(\'string\')',
+        'image: attr(\'string\')',
+        'online: attr(\'boolean\')' ],
+     relationships: { belongsTo: [], hasMany: [Object] } } }

@@ -102,7 +102,112 @@ var string = `<!DOCTYPE html>
     <div class="models">
 `
 
-function func(data, model) {
+function addStringScript() {
+return `                      
+  </div>
+  <script>
+    function angle(p1,p2) { 
+      var dx=p2.x-p1.x,
+          dy=p2.y-p1.y,
+          c=Math.sqrt(dx*dx+dy*dy),
+          deg;
+      deg=(c>0) ? Math.asin(dy/c)/(Math.PI/180) : 0;
+      deg=(dx>0) ? deg : 180-deg;  
+      return (deg).toFixed(2); 
+    }
+
+    function pythagoras(point1, point2) {
+      return (Math.sqrt(Math.pow(Math.abs(point1.x-point2.x), 2) + Math.pow(Math.abs(point1.y-point2.y), 2)))
+    }
+
+    init = function() {
+      var arrows = document.getElementsByClassName('arrow');
+
+      for (var i = 0; i < arrows.length; i++) {
+        (function() {
+          arrows[i].remove();
+        })()
+      };
+      console.log("started")
+      var models = document.getElementsByClassName('model');
+      var belongsTo, hasMany, modelName;
+      for (var i =0; i < models.length; i++) {
+        belongsTo = models[i].dataset.belongsto
+        hasMany = models[i].dataset.hasmany
+        modelName = models[i].dataset.model
+        var divFrom = models[i]
+        if (modelName === "user" || modelName === "battle") {
+
+          if (hasMany.length !== 0) {
+            // name is pluralized so remove s to search
+            var rels = hasMany.split(" ")
+            for (var j = 0; j <  rels.length; j++) {
+
+              var toName = rels[j].slice(0, -1);
+              var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
+
+              var divFromCoords = divFrom.getBoundingClientRect()
+              var divToCoords = divTo.getBoundingClientRect()
+              var divFromCenter = {
+                "x": divFromCoords.left + divFromCoords.width/2,
+                "y": divFromCoords.top + divFromCoords.height/2,
+              }
+
+              var divToCenter = {
+                "x": divToCoords.left + divToCoords.width/2,
+                "y": divToCoords.top + divToCoords.height/2,
+              }
+
+              // need to figure out where to put arrow,
+              // if the model from is above model to, then we aim for top of container
+              // if model from is below to (via top in coords), aim for the bottom of the model container
+              var newArrow = document.createElement("div"); 
+              newArrow.className += "arrow"
+              newArrow.className += " " + modelName + "_to_" + toName
+              newArrow.style.top = divFromCenter.y + "px";
+              newArrow.style.left = (divFromCenter.x) + "px"
+              // newArrow.style.bottom = divFromCoords.bottom + "px"
+              // newArrow.style.right = divFromCoords.right + "px";
+
+              var deg = angle({"x": divFromCenter.x,
+                             "y": divFromCenter.y
+                            }, 
+                          {"x": divToCenter.x, 
+                           "y": divToCenter.y
+                          });
+              
+              var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
+              
+              var prefixTransform = "transform";
+
+
+              newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
+              newArrow.style.width = distanceForArrow;
+              
+              document.body.appendChild(newArrow);
+
+              if (divFromCoords.top > divToCoords.top) {
+                // arrow needs to point down
+                
+              } else {
+                // arrow needs to point up
+              }                              
+            }
+          }
+        }
+        console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
+      }
+      console.log('finished')
+    }
+
+    window.onresize = init
+
+    init()
+  </script>
+  </body></html>`
+}
+
+function addToModels(data, model) {
   // console.log("LINE: " + data);
   var data = data.trim().replace(",", '');
 
@@ -121,7 +226,7 @@ function func(data, model) {
   // return models
 }
 
-function readLines(data, func, model) {
+function readLines(data, addToModels, model) {
   var remaining = "";
 
   remaining += data;
@@ -130,15 +235,43 @@ function readLines(data, func, model) {
   while (index > -1) {
     var line = remaining.substring(last, index);
     last = index + 1; 
-    func(line, model);
+    addToModels(line, model);
     index = remaining.indexOf('\n', last);
   }
 
   remaining = remaining.substring(last);
 
   if (remaining.length > 0) {
-    func(remaining, model);
+    addToModels(remaining, model);
   }
+}
+
+function readLinesFromFile(keys, j, model) {
+  if (models[keys[j]]["attributes"] !== undefined) {      
+    var attributes = _.map(models[keys[j]]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " <span class='attr-val'>" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + "</span><br />"})
+  } else {
+    var attributes = models[keys[j]]["attributes"]
+  }
+
+  var relationships = models[keys[j]]["relationships"]
+  modelString = `<div class="model" data-model="${[keys[j]]}" data-belongsTo="${relationships[
+                      "belongsTo"].join(" ")}" data-hasMany="${relationships[
+                      "hasMany"].join(" ")}">
+                  <div class="name">
+                    ${[keys[j]]}
+                  </div>
+                  <div class="attrs">
+                    ${attributes.join(" ")}
+                  </div>
+                  <div class="relations">
+                    belongsTo: ${relationships[
+                      "belongsTo"].join(", ")}
+                    <br />
+                    hasMany: ${relationships[
+                      "hasMany"].join(", ")}
+                  </div>
+                </div>`
+  string += modelString;
 }
 
 fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
@@ -148,10 +281,8 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
 
   for (var i = 0; i < data.length; i++) {
     if (/\.js/.test(data[i])) {
-      // console.log(data[i]);
 
       (function() {
-        // console.log(data[i])
         var model = data[i].split(".")[0].split("-");
         if (model.length >= 2) {
           model = model[0] + capitalize(model[1]);
@@ -164,155 +295,19 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
                         "relationships": {"belongsTo": [], "hasMany": []}
                       };
         fs.readFile(path.resolve(__dirname, "app/models/" + data[i]), "utf8", function(err, fileData) {
-          // console.log("MODEL: ", model)
-          // console.log("FILE DATA: ", fileData)
-          readLines(fileData, func, model);
-          // console.log(models);
-          // console.log("I IS", i)
-          // console.log("DATA IS", data.length)
-          // console.log("model is", model) 
-          // console.log("data last is", data[data.length-1]) 
+          readLines(fileData, addToModels, model);
+
           if (data[data.length - 1].split(".")[0] === model) {
             console.log('DONEDONEONDONDONE')
-            // console.log(models)
             var keys = _.keys(models);
-            // console.log(keys)
 
             var modelString = '';
-          // + "" + item.split[':'][1].split('(')[0].replace(')', '') 
-            for (var j = 0; j < keys.length; j++) {
-              if (models[keys[j]]["attributes"] !== undefined) {      
-                var attributes = _.map(models[keys[j]]["attributes"], function(item) { return " " + item.trim().split(":")[0] + " <span class='attr-val'>" + item.trim().split(":")[1].trim().replace("(", "").replace(")", "").replace("\'", '').split('attr')[1].replace('\'', '') + "</span><br />"})
-              } else {
-                var attributes = models[keys[j]]["attributes"]
-              }
 
-              var relationships = models[keys[j]]["relationships"]
-              // console.log(attributes)
-              // console.log(models[keys[j]]["attributes"])
-              modelString = `<div class="model" data-model="${[keys[j]]}" data-belongsTo="${relationships[
-                                  "belongsTo"].join(" ")}" data-hasMany="${relationships[
-                                  "hasMany"].join(" ")}">
-                              <div class="name">
-                                ${[keys[j]]}
-                              </div>
-                              <div class="attrs">
-                                ${attributes.join(" ")}
-                              </div>
-                              <div class="relations">
-                                belongsTo: ${relationships[
-                                  "belongsTo"].join(", ")}
-                                <br />
-                                hasMany: ${relationships[
-                                  "hasMany"].join(", ")}
-                              </div>
-                            </div>`
-              // console.log(models[keys[j]])
-              string += modelString;
+            for (var j = 0; j < keys.length; j++) {
+              readLinesFromFile(keys, j, model)
             }
 
-            string += `                      
-                      </div>
-                      <script>
-                        function angle(p1,p2) { 
-                          var dx=p2.x-p1.x,
-                              dy=p2.y-p1.y,
-                              c=Math.sqrt(dx*dx+dy*dy),
-                              deg;
-                          deg=(c>0) ? Math.asin(dy/c)/(Math.PI/180) : 0;
-                          deg=(dx>0) ? deg : 180-deg;  
-                          return (deg).toFixed(2); 
-                        }
-
-                        function pythagoras(point1, point2) {
-                          return (Math.sqrt(Math.pow(Math.abs(point1.x-point2.x), 2) + Math.pow(Math.abs(point1.y-point2.y), 2)))
-                        }
-
-                        init = function() {
-                          var arrows = document.getElementsByClassName('arrow');
-
-                          for (var i = 0; i < arrows.length; i++) {
-                            (function() {
-                              arrows[i].remove();
-                            })()
-                          };
-                          console.log("started")
-                          var models = document.getElementsByClassName('model');
-                          var belongsTo, hasMany, modelName;
-                          for (var i =0; i < models.length; i++) {
-                            belongsTo = models[i].dataset.belongsto
-                            hasMany = models[i].dataset.hasmany
-                            modelName = models[i].dataset.model
-                            var divFrom = models[i]
-                            if (modelName === "user" || modelName === "battle") {
-
-                              if (hasMany.length !== 0) {
-                                // name is pluralized so remove s to search
-                                var rels = hasMany.split(" ")
-                                for (var j = 0; j <  rels.length; j++) {
-
-                                  var toName = rels[j].slice(0, -1);
-                                  var divTo = document.querySelectorAll("[data-model='"+toName+"']")[0]
-
-                                  var divFromCoords = divFrom.getBoundingClientRect()
-                                  var divToCoords = divTo.getBoundingClientRect()
-                                  var divFromCenter = {
-                                    "x": divFromCoords.left + divFromCoords.width/2,
-                                    "y": divFromCoords.top + divFromCoords.height/2,
-                                  }
-
-                                  var divToCenter = {
-                                    "x": divToCoords.left + divToCoords.width/2,
-                                    "y": divToCoords.top + divToCoords.height/2,
-                                  }
-
-                                  // need to figure out where to put arrow,
-                                  // if the model from is above model to, then we aim for top of container
-                                  // if model from is below to (via top in coords), aim for the bottom of the model container
-                                  var newArrow = document.createElement("div"); 
-                                  newArrow.className += "arrow"
-                                  newArrow.className += " " + modelName + "_to_" + toName
-                                  newArrow.style.top = divFromCenter.y + "px";
-                                  newArrow.style.left = (divFromCenter.x) + "px"
-                                  // newArrow.style.bottom = divFromCoords.bottom + "px"
-                                  // newArrow.style.right = divFromCoords.right + "px";
-
-                                  var deg = angle({"x": divFromCenter.x,
-                                                 "y": divFromCenter.y
-                                                }, 
-                                              {"x": divToCenter.x, 
-                                               "y": divToCenter.y
-                                              });
-                                  
-                                  var distanceForArrow = pythagoras(divFromCenter, divToCenter) + "px"
-                                  
-                                  var prefixTransform = "transform";
-
-
-                                  newArrow.style[prefixTransform]="rotate(" + deg + "deg)";
-                                  newArrow.style.width = distanceForArrow;
-                                  
-                                  document.body.appendChild(newArrow);
-
-                                  if (divFromCoords.top > divToCoords.top) {
-                                    // arrow needs to point down
-                                    
-                                  } else {
-                                    // arrow needs to point up
-                                  }                              
-                                }
-                              }
-                            }
-                            console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
-                          }
-                          console.log('finished')
-                        }
-
-                        window.onresize = init
-
-                        init()
-                      </script>
-                      </body></html>`
+            string += addStringScript()
 
             fs.writeFile(path.resolve(__dirname, 'index.html'), string, function(err) {
               if (err) {
@@ -327,6 +322,4 @@ fs.readdir(path.resolve(__dirname, 'app/models/'), function (err, data) {
 
     }
   }
-
-  
 })

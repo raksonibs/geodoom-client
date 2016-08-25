@@ -25,7 +25,7 @@ export default Ember.Controller.extend({
       }
 
       this.get('model').save().then((battle) => {
-        this.transitionToRoute('dashboard.battles.battledome', battle);
+        this.transitionToRoute('dashboard.battles.battledome', battle.id);
         // this.refreshRoute();
       });
     }

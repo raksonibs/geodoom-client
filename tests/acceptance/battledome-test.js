@@ -22,8 +22,8 @@ test('visiting /battledome', function(assert) {
   andThen(function() {
     // already visited battle
     assert.equal(currentURL(), '/dashboard/battles/14/battledome');
-    assert.equal(find('.modal-text').text().trim(), "This Battle is done!")
-  })
+    assert.equal(find('.modal-text').text().trim(), "This Battle is done!");
+  });
 
   visit('/dashboard/battles');
   click('.new-battle');
@@ -31,14 +31,19 @@ test('visiting /battledome', function(assert) {
   andThen(function() {
     // already visited battle
     assert.equal(currentURL(), '/dashboard/battles/new');    
-  })
-
-  var secondOpt = find('.select-opt option:eq(1)');
-  fillIn('.select-opt', secondOpt.val());
-  click('.submit')
+  });
+  
+  fillIn('.select-opt', 'kacper@gmail.com');
+  click('.submit');
+  let num;
 
   andThen(function() {
-    let num = currentURL().match(/\d+/)
+    num = currentURL().match(/\d+/);
     assert.equal(currentURL(), '/dashboard/battles/' + num + '/show');
-  })
+  });
+
+  click('.start');
+  andThen(function() {
+    assert.equal(currentURL(), '/dashboard/battles/' + num + '/battledome');
+  });
 });

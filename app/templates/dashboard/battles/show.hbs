@@ -7,7 +7,7 @@
   <h4> Status: {{model.status}}</h4>
 
   <div class="select-a-pet">
-    Select a Pet: <br />
+    Select a Pet, {{currentUser.email}}: <br />
     Currently Selected: {{selectedPet}} <br />
     <select onchange={{action 'updateSelectedPet' value="target.value"}}>
     {{#each currentUser.pets as |pet|}}
@@ -18,5 +18,7 @@
     </select>
   </div>
 
-  <button class="start" onclick={{action 'startMatch'}}>Start Match</button>
+  <button class="start" onclick={{action 'startMatch'}}>
+    Start Match
+  </button>
 </div>

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
       this.get('save')();
     },
 
-    updateSelectedUser(value) {
+    updateUser(value) {
       this.send('updateSelectedUser')(value);
     }
   }

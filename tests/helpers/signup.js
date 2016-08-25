@@ -6,4 +6,5 @@ export default Ember.Test.registerAsyncHelper('signup',
     fillIn('#password', 'password');
     click('button#signup');
   }
+)
 // jshint ignore: end

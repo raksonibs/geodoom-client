@@ -326,3 +326,11 @@ main {
 }
 
 @import "charts.scss";
+
+
+.ember-modal-overlay {
+  // overlay not observed?
+  width: 50% !important;
+  left: 25% !important;
+}
+

@@ -10,8 +10,8 @@
       </button>
     {{/if}}
   {{else}}
-    <h1>{{session.currentUser.uid}}</h1>
-    Your Steam account is linked
+    <h1 class="steam-id">{{session.currentUser.uid}}</h1>
+    <div class="linked-account">Your Steam account is linked</div>
   {{/if}}
 
   {{money-slider    

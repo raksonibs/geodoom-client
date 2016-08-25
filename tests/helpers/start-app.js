@@ -3,7 +3,7 @@ import Application from '../../app';
 import config from '../../config/environment';
 import './login';
 import './signup';
-
+import "./asserts";
 
 export default function startApp(attrs) {
   let application;

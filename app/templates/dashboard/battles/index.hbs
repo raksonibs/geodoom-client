@@ -3,15 +3,15 @@
 
   {{#each model as |battle|}}
     {{#if (eq battle.status 'pending')}}
-      <p>{{#link-to 'dashboard.battles.show' battle.id}}Battle name: {{battle.name}}{{/link-to}}</p>
+      <p>{{#link-to 'dashboard.battles.show' battle.id class=battle.id }}Battle name: {{battle.name}}{{/link-to}}</p>
     {{else}}
-      <p>{{#link-to 'dashboard.battles.battledome' battle.id}}Battle name: {{battle.name}}{{/link-to}}</p>
+      <p>{{#link-to 'dashboard.battles.battledome' battle.id class=battle.id }}Battle name: {{battle.name}}{{/link-to}}</p>
     {{/if}}
   {{else}}
     <p> No battles yet!</p>
   {{/each}}
 
-  {{#link-to 'dashboard.battles.new'}}
+  {{#link-to 'dashboard.battles.new' class="new-battle"}}
     New Battle!
   {{/link-to}}
 </div>

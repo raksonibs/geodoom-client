@@ -8,16 +8,19 @@
 {{/each}}
 
 {{#each users as |user|}}
-  <p> {{user.email}}</p>
+  <p>User: {{user.email}}</p>
 {{/each}}
-<form {{action 'submitForm' on="submit"}}>
-<select onchange={{action (action 'updateSelectedUser') value="target.value"}}>
-{{#each users as |user|}}
-  <option value={{user.email}}>
-    {{user.email}}
-  </option>
-{{/each}}
-</select>
 
-<button type="submit">Submit</button>
+<form {{action 'submitForm' on="submit"}}>
+  <select class="select-opt" style="display: block;" onchange={{action (action updateSelectedUser) value="target.value"}}>
+    {{#each users as |user|}}
+      <option value={{user.email}}>
+        {{user.email}}
+      </option>
+    {{/each}}
+  </select>
+
+  <button class="submit" type="submit">
+    Submit
+  </button>
 </form>

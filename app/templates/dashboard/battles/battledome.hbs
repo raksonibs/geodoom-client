@@ -1,9 +1,11 @@
 <div class="full-arena">
-  {{!-- {{#if winnerFound}} 
-    {{#modal-dialog}}
-      This Battle is done!
+  {{#if winnerFound}} 
+    {{#modal-dialog class="modal battledome"}}
+      <div class="modal-text">
+        This Battle is done!
+      </div>
     {{/modal-dialog}}
-  {{/if}} --}}
+  {{/if}}
 
   <div class="arena">
     {{#each petStates as |petState index|}}

@@ -337,3 +337,25 @@ main {
 select {
   display: block !important;
 }
+
+.status {
+  border: 1px solid black;
+  
+  p {
+    display: inline-block;
+  }
+
+  .status-text {
+    &.pending {
+      color: $green;
+    }
+
+    &.completed {
+      color: $red;
+    }
+
+    &.started {
+      color: darken($green, 35); 
+    }
+  }
+}

@@ -3,7 +3,7 @@ import moduleForAcceptance from 'red-green-client/tests/helpers/module-for-accep
 
 moduleForAcceptance('Acceptance | battledome');
 
-test('visiting /battledome', function(assert) {  
+test('testing battledome creation and fighting path', function(assert) {  
   login(); 
 
   andThen(function() {

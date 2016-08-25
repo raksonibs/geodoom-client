@@ -14,10 +14,6 @@ export default Ember.Route.extend({
     // relationship not loading, hack
   },
 
-  // afterModel() {
-  //   this.refresh(); 
-  // },
-
   actions: {
     refresh() {
       this.refresh();

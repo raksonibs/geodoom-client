@@ -10,23 +10,37 @@ $blue: rgba(91, 91, 212, 0.0);
   background-size: cover;
 
   .arena {
-    display: flex;
+    // display: flex;
     width: 90%;
     // margin-right: 100px;
     
     .challenger {
-      flex: 2;
+      // width: 100%;
+      width: 30%;
+      display: inline-block;
+
+      &.your-pet {
+        border: 3px solid $green;
+      }
+    }
+
+    .vs-ctn {
+      display: inline-block;
+      width: 20%;
     }
 
     .vs {
       border: none;
-      flex: 1;
       display: flex;
       font-size: 10rem;
       -webkit-align-items: center;
       align-items: center;
       -webkit-justify-content: center;
       justify-content: center;
+    }
+
+    .buttons {
+      text-align: center;
     }
   }
 }

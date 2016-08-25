@@ -10,23 +10,30 @@
   <div class="arena">
     {{#each petStates as |petState index|}}
       {{#if (eq index 1)}}
-        <div class="vs pet">VS</div> 
+        <div class="vs-ctn">
+          <div class="vs">VS</div> 
+        </div>
       {{/if}}
 
-      <div class="challenger">
+      <div class="challenger {{if (eq petState.pet.user.email currentUser.email) 'your-pet' ''}}">
         {{pet-view
           pet=petState.pet
           vertices=petState.pet.vertices
           petState=petState
         }}
+
+        <div class="buttons">          
+          {{#if (eq battle.currentTurnEmail session.currentUser.email)}}
+            {{#if (eq petState.pet.user.email currentUser.email)}}
+              {{#if notWinnerFound}}
+                <button class="btn" {{action 'sendMessage' 'attack'}}>Attack</button>
+                <button class="btn" {{action 'sendMessage' 'defend'}}>Defend</button>
+              {{/if}}
+            {{/if}}
+          {{/if}}
+        </div>
       </div>
 
-      {{#if (eq battle.currentTurnEmail session.currentUser.email)}}
-        {{#if notWinnerFound}}
-          <button class="btn" {{action 'sendMessage' 'attack'}}>Attack</button>
-          <button class="btn" {{action 'sendMessage' 'defend'}}>Defend</button>
-        {{/if}}
-      {{/if}}
 
     {{/each}}
   </div>

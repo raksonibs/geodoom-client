@@ -2,11 +2,14 @@
   <h3> Your Battles </h3>
 
   {{#each model as |battle|}}
-    {{#if (eq battle.status 'pending')}}
-      <p>{{#link-to 'dashboard.battles.show' battle.id class=battle.id }}Battle name: {{battle.name}}{{/link-to}}</p>
-    {{else}}
-      <p>{{#link-to 'dashboard.battles.battledome' battle.id class=battle.id }}Battle name: {{battle.name}}{{/link-to}}</p>
-    {{/if}}
+    <div class="status {{battle.status}}">
+      {{#if (eq battle.status 'pending')}}
+        <p>{{#link-to 'dashboard.battles.show' battle.id class=battle.id }}Battle name: {{battle.name}}{{/link-to}}</p>
+      {{else}}
+        <p>{{#link-to 'dashboard.battles.battledome' battle.id class=battle.id }}Battle name: {{battle.name}}{{/link-to}}</p>
+      {{/if}}
+        <p class="status-text {{battle.status}}">{{battle.status}}</p>
+    </div>
   {{else}}
     <p> No battles yet!</p>
   {{/each}}

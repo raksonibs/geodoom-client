@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
       battle.save({}).then((battle) => {
         this.transitionToRoute('dashboard.battles.show', battle);
         this.send('refreshRoute');
-      })
+      });
     }
   }
 });

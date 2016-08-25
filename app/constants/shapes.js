@@ -1,3 +1,4 @@
+// jshint ignore: start
 export default {
   "0": {
     name: "circle"
@@ -36,3 +37,4 @@ export default {
     name: "elevenagon"
   },
 }
+// jshint ignore: end

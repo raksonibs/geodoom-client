@@ -4,10 +4,10 @@ export default Ember.Controller.extend({
   actions: {
     save(balanceChangeData) {
       this.get('model').setProperties(balanceChangeData);
-      this.get('model').save().then((balanceChange) => {
+      this.get('model').save().then(() => {
         this.transitionToRoute('dashboard.expenses');
-        this.send('refreshRoute')
-      })
+        this.send('refreshRoute');
+      });
     }
   }
 });

@@ -6,7 +6,7 @@ export default Ember.Object.extend({
   authenticatedAjax: Ember.inject.service(),
   // The authorization argument passed in to `session.open` here is
   // the result of the `torii.open(providerName)` promise
-  open: function(authorization) {
+  open: function() {
     // need to passssss user
     // var userId = authorization.user,
     // var store  = this.get('store');

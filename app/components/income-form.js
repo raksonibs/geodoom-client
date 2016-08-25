@@ -1,3 +1,4 @@
+// jshint ignore: start
 import Ember from 'ember';
 import accounting from 'accounting';
 import moment from 'moment';
@@ -16,3 +17,4 @@ export default Ember.Component.extend({
     }
   }
 });
+// jshint ignore: end

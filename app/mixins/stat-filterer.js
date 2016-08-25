@@ -1,3 +1,4 @@
+// jshint ignore: start
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
@@ -58,3 +59,4 @@ export default Ember.Mixin.create({
     return this.percentFormer(this.get('kills'), this.get('deaths'))
   }),
 });
+// jshint ignore: end

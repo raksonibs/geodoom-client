@@ -8,25 +8,25 @@ export default Ember.Controller.extend({
   userData: Ember.Object.create(), //object for storing update attributes until save,
   actions: {
     updateEmail(value) {
-      this.set('userData.email', value)
+      this.set('userData.email', value);
     },
     updateCurrency(value) {
-      this.set('userData.currency', value)
+      this.set('userData.currency', value);
     },
     save() {
       const attrsToSave = {};
       if (Ember.isPresent(this.get('userData.email'))) {
-        attrsToSave.email = this.get('userData.email')
+        attrsToSave.email = this.get('userData.email');
       }
       if (Ember.isPresent(this.get('userData.currency'))) {
-        attrsToSave.currency = this.get('userData.currency')
+        attrsToSave.currency = this.get('userData.currency');
       }
 
       this.get('currentUser').setProperties(attrsToSave);
 
       this.get('currentUser').save().then(() => {
-        this.set('saveMessage', "saved")
-      })
+        this.set('saveMessage', "saved");
+      });
     }
   }
 });

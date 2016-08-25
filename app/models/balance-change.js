@@ -8,7 +8,7 @@ export default Model.extend({
   entryDate: attr('string'),
   value: attr('number'),
   isExpense: Ember.computed('changeType', function() {
-    return this.get('changeType') === 'expense'
+    return this.get('changeType') === 'expense';
   }),
   isIncome: Ember.computed.not('isExpense')
 });

@@ -1,3 +1,4 @@
+// jshint ignore: start
 import Ember from 'ember';
 import moment from 'moment';
 
@@ -24,3 +25,4 @@ export default Ember.Mixin.create({
     return (this.get('lostBattles').length / this.get('totalBattles')) * 100;
   }),
 });
+// jshint ignore: end

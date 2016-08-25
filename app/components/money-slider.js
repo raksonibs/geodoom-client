@@ -20,7 +20,7 @@ export default Ember.Component.extend({
 
 
     var slider = document.getElementById('ui-slider');
-
+    // jshint ignore: start
     noUiSlider.create(slider, {
       start: [this.get('wagerStart'), this.get('wagerEnd')],
       connect: true,
@@ -29,6 +29,7 @@ export default Ember.Component.extend({
         'max': this.get('wagerEnd')
       }
     });
+    // jshint ignore: end
 
     let thisState = this;
 

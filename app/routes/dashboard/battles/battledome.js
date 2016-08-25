@@ -5,7 +5,7 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash({
       battle: this.store.findRecord('battle', params.battle_id),
       petStates: this.store.query('pet-state', {filter: {battle_id: params.battle_id}})
-    })
+    });
   },
 
   setupController(controller, models) {

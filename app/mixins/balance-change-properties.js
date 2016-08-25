@@ -1,3 +1,4 @@
+// jshint ignore: start
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
@@ -29,3 +30,4 @@ export default Ember.Mixin.create({
     return this.get('expenseSum')* 100 / (sumBoth);
   })
 });
+// jshint ignore: end

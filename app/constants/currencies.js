@@ -1,3 +1,4 @@
+// jshint ignore: start
 export default {
   USD: {
     symbol: "$",
@@ -472,3 +473,4 @@ export default {
     name: "Zambian Kwacha"
   }
 }
+// jshint ignore: end

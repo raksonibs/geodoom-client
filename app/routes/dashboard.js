@@ -7,13 +7,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
       refreshModel: true
     }
   },
-  model(params) {
+  model() {
     // return this.store.query('balance-change', { filter: { period: params.period } });
     return this.store.query('battle', {filter: {range: 'overview'}});
   },
   actions: {
     refreshRoute() {
-      this.refresh() //refreses model
+      this.refresh(); //refreses model
     }
   }
 });

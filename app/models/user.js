@@ -1,7 +1,8 @@
 import Model from 'ember-data/model';
 import attr from 'ember-data/attr';
-import { belongsTo, hasMany } from 'ember-data/relationships';
-import currencies from 'red-green-client/constants/currencies'
+import { hasMany } from 'ember-data/relationships';
+import currencies from 'red-green-client/constants/currencies';
+import Ember from 'ember';
 
 export default Model.extend({
   currency: attr('string'),
@@ -10,7 +11,7 @@ export default Model.extend({
   nickname: attr('string'),
   image: attr('string'),
   currencySymbol: Ember.computed('currency', function() {
-    return currencies[this.get('currency')].symbol
+    return currencies[this.get('currency')].symbol;
   }),
   pets: hasMany('pet', {async: true}),
   battles: hasMany('battle', {async: true}),

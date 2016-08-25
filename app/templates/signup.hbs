@@ -1,14 +1,14 @@
 <div class="form-container">
   <form {{action "signup" email password on="submit"}}>
     <h2>Sign up</h2>
-    {{input value=email placeholder="email"}}
-    {{input value=password type="password" placeholder="password"}}
+    {{input value=email id="email" placeholder="email"}}
+    {{input value=password id="password" type="password" placeholder="password"}}
     
     {{#if signupError}}
       <p> {{signupError}} </p>
     {{/if}}
 
-    <button {{action "signup" email password disabled=isSigningUp}}>
+    <button id="signup" {{action "signup" email password disabled=isSigningUp}}>
       {{#if isSigningUp}}
         Signing up...
       {{else}}

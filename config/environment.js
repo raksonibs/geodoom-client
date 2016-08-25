@@ -44,6 +44,10 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+    ENV.serverURL = 'http://localhost:3000';
+    ENV.contentSecurityPolicy = {
+      "connect-src": "'self' ws://localhost:4000"
+    }
   }
 
   if (environment === 'production') {
@@ -54,8 +58,8 @@ module.exports = function(environment) {
   }
 
   ENV['ember-simple-auth'] = {
-    routeAfterAuthentication: 'dashboard',
-    routeIfAlreadyAuthenticated: 'dashboard'
+    routeAfterAuthentication: 'dashboard.overview',
+    routeIfAlreadyAuthenticated: 'dashboard.overview'
   }
 
   ENV.torii = {

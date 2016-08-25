@@ -3,6 +3,7 @@ import AjaxService from 'ember-ajax/services/ajax';
 import ENV from '../config/environment';
 
 export default AjaxService.extend({
+  isServiceFactory: true,
   session: Ember.inject.service(),
   trustedHosts: [ENV.serverURL.split('//')[1]],
   headers: Ember.computed('session', function() {

@@ -11,7 +11,7 @@
   <p> {{user.email}}</p>
 {{/each}}
 <form {{action 'submitForm' on="submit"}}>
-<select onchange={{action (action updateSelectedUser) value="target.value"}}>
+<select onchange={{action (action 'updateSelectedUser') value="target.value"}}>
 {{#each users as |user|}}
   <option value={{user.email}}>
     {{user.email}}

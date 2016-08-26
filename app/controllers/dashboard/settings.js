@@ -6,6 +6,12 @@ export default Ember.Controller.extend({
   session: Ember.inject.service(),
   currentUser: Ember.computed.alias('session.currentUser'),
   userData: Ember.Object.create(), //object for storing update attributes until save,
+  currency: Ember.computed('userData', function() {
+    return this.get('userData.currency');
+  }),
+  email: Ember.computed('userData', function() {
+    return this.get('userData.email');
+  }),
   actions: {
     updateEmail(value) {
       this.set('userData.email', value);

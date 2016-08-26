@@ -17,7 +17,7 @@ test('visiting /dashboard/overview with Login when user does not exit', function
 
   andThen(function() {
     assert.equal(currentURL(), '/dashboard/overview');
-    assert.equal(find('div.linked-account').text(), "Your Steam account is linked");    
+    assert.equal(find('div.linked-account').text(), "Your Steam account is not linked");    
   });
 });
 

@@ -1,6 +1,8 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
+  var deployTarget = process.env.DEPLOY_TARGET;
+
   var ENV = {
     modulePrefix: 'red-green-client',
     environment: environment,
@@ -44,9 +46,13 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.serverURL = 'http://localhost:3000';
+    // ENV.serverURL = 'http://localhost:3000';
+    // ENV.contentSecurityPolicy = {
+    //   "connect-src": "'self' ws://localhost:4000"
+    // }
+    ENV.serverURL = 'https://desolate-woodland-60847.herokuapp.com';
     ENV.contentSecurityPolicy = {
-      "connect-src": "'self' ws://localhost:4000"
+      "connect-src": "'self' ws://protected-garden-47773.herokuapp.com"
     }
   }
 

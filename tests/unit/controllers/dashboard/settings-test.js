@@ -1,5 +1,4 @@
 import { moduleFor, test } from 'ember-qunit';
-import { sessionStub } from 'red-green-client/tests/helpers/stub-session';
 
 moduleFor('controller:dashboard/settings', 'Unit | Controller | settings', {
   // Specify the other units that are required for this test.

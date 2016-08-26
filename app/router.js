@@ -25,7 +25,10 @@ Router.map(function() {
       this.route('battledome', {path: ':battle_id/battledome'});
       this.route('pet-states');
     });
-    this.route('pets');
+    this.route('pets', function() {
+      this.route('new');
+      this.route('edit');
+    });
     this.route('stats');
   });
   this.route('logout');

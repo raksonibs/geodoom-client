@@ -30,7 +30,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.serverURL = 'http://localhost:3000';
     ENV.contentSecurityPolicy = {
-      "connect-src": "'self' ws://localhost:4000"
+      "connect-src": "'self' ws://localhost:4000 http://badcomics.s3.amazonaws.com"
     }
     // ENV.serverURL = 'http://red-green-api.herokuapp.com';
   }
@@ -48,18 +48,18 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
     // ENV.serverURL = 'http://localhost:3000';
     // ENV.contentSecurityPolicy = {
-    //   "connect-src": "'self' ws://localhost:4000"
+    //   "connect-src": "'self' ws://localhost:4000 http://badcomics.s3.amazonaws.com"
     // }
     ENV.serverURL = 'https://desolate-woodland-60847.herokuapp.com';
     ENV.contentSecurityPolicy = {
-      "connect-src": "'self' ws://protected-garden-47773.herokuapp.com"
+      "connect-src": "'self' ws://protected-garden-47773.herokuapp.com http://badcomics.s3.amazonaws.com"
     }
   }
 
   if (environment === 'production') {
     ENV.serverURL = 'https://desolate-woodland-60847.herokuapp.com';
     ENV.contentSecurityPolicy = {
-      "connect-src": "'self' ws://protected-garden-47773.herokuapp.com"
+      "connect-src": "'self' ws://protected-garden-47773.herokuapp.com http://badcomics.s3.amazonaws.com"
     }
   }
 

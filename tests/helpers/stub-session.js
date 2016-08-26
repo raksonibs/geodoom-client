@@ -1,7 +1,7 @@
 // jshint ignore: start
 import Ember from 'ember';
 
-const sessionStub = Ember.Service.extend({
+export default Ember.Service.extend({
   currentUser: {
     email: "oskar@gmail.com"
   },
@@ -17,6 +17,4 @@ const sessionStub = Ember.Service.extend({
     this.authenticate(argument);
   }
 });
-
-export { sessionStub };
 // jshint ignore: end

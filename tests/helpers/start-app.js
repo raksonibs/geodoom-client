@@ -4,6 +4,7 @@ import config from '../../config/environment';
 import './login';
 import './signup';
 import "./asserts";
+import './stub-session';
 
 export default function startApp(attrs) {
   let application;

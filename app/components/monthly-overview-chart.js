@@ -24,7 +24,7 @@ export default Ember.Component.extend({
       const battlesForDay = battles.filterBy('createdAt', dateString);      
       const winsForDay = battlesForDay.filterBy('winnerEmail', this.get('session.currentUser.email')).length //.mapBy('value').reduce(((prev, curr) => prev + curr), 0);
       const lossesForDay = battlesForDay.filterBy('loserEmail', this.get('session.currentUser.email')).length //.mapBy('value').reduce(((prev, curr) => prev + curr), 0);
-
+      
       labels.push(day);
       wins.push(winsForDay);
       losses.push(lossesForDay);

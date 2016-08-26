@@ -1,7 +1,10 @@
-# Red-green-client
+# Geoodoom Client
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
+[![Build Status](https://img.shields.io/travis/raksonibs/geodoom-client.svg?branch=master.svg?style=flat-square)](https://travis-ci.org/raksonibs/geodoom-client)
+[![Coverage Status](https://img.shields.io/badge/coverage-80-brightgreen.svg)](https://coveralls.io/github/raksonibs/geodoom-client)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 
 ## Prerequisites
 

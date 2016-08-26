@@ -13,12 +13,14 @@ test('it renders', function(assert) {
 
   assert.equal(this.$().text().trim(), '');
 
+  this.set('text', "Recent Games Played");
+
   // Template block usage:
   this.render(hbs`
     {{#active-games-breakdown}}
-      
+      text='Recent Games Played'
     {{/active-games-breakdown}}
   `);
 
-  assert.equal(this.$().text().trim(), '');
+  assert.equal(this.$('.earned-text').text().trim(), "");
 });

@@ -5,7 +5,7 @@ moduleFor('controller:dashboard/settings', 'Unit | Controller | settings', {
   // Specify the other units that are required for this test.
   needs: ['service:session'],
   beforeEach() {
-    this.register('service:session', sessionStub);   
+    // this.register('service:session', sessionStub);   
   }
 });
 
@@ -38,7 +38,7 @@ test('it saves attrs', function(assert) {
   let controller = this.subject();
   controller.send('updateCurrency', "EUR");
   controller.send('updateEmail', "email");
-  // debugger
+
   // controller.send('save');
   assert.ok(controller);
 });

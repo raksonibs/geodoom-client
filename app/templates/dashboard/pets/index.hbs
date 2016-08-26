@@ -1,5 +1,18 @@
 <div class="gutters">
   <h1> Your Pets </h1>
+  <button onclick={{route-action "createPet"}}>Create a Pet </button>
+
+  {{#if createPetModal}}
+    {{#modal-dialog}}
+      <div class="modal-text">
+        Let's Create a pet shall we
+      </div>
+
+      {{pet-form
+        fullCreation=(route-action "fullCreation")
+      }}
+    {{/modal-dialog}}
+  {{/if}}
 
   <ul class="pets">
     {{#each model as |pet|}}

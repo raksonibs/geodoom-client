@@ -6,5 +6,17 @@ export default Ember.Route.extend(RouteMixin, {
   session: Ember.inject.service(),
   model(params) {    
     return this.findPaged('pet', params);
+  },
+  createPetModal: false,
+  actions: {
+    createPet() {
+      var controller = this.controller.set('createPetModal', true);
+      this.set('createPetModal', true);
+      // this.refresh();
+    },
+
+    fullCreation(petName) {
+      debugger
+    }
   }
 });

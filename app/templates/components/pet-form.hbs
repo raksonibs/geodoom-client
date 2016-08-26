@@ -1,1 +1,16 @@
-{{yield}}
+<h3> Pet Form </h3>
+{{!-- {{#each battle.errors as |error|}}
+  <p>
+    {{error.attribute}}:
+    {{error.message}}
+  </p>
+{{/each}} --}}
+
+<form {{action 'createPetModal' on="submit"}}>
+
+  {{input value=name}}
+
+  <button class="submit" type="submit">
+    Submit
+  </button>
+</form>

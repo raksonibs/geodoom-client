@@ -3,19 +3,16 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   getName(name) {
-    return this.get('stats').findBy('name', name).toJSON().value
+    return this.get('stats').findBy('name', name).get('value') || 0
   },
   percentFormer(num, denom) {
+    if (denom === 0 ) {
+      return 0;
+    }
     return (num / denom * 100).toFixed(2);
   },
   stats: Ember.computed.alias('model'),
   test: Ember.computed('stats', function() {
-    return this.get('stats').toArray().length
-  }),
-  test2: Ember.computed('stats.[]', function() {
-    return this.get('stats').toArray().length
-  }),
-  test3: Ember.computed('model', function() {
     return this.get('stats').toArray().length
   }),
   wins: Ember.computed('stats', function() {
@@ -29,10 +26,6 @@ export default Ember.Mixin.create({
     // return this.get('stats').filter((item) => item.name === "total_deaths");
     // return this.get('stats').filterBy('name', 'total_wins')
     return this.getName('total_deaths');
-  }),
-  wins2: Ember.computed('stats', function() {
-    // return this.get('stats').mapBy('name', 'value').find((item) => item === "total_wins");
-    return 0;
   }),
   kills: Ember.computed('stats.[]', function() {
     return this.getName('total_kills');
@@ -50,13 +43,13 @@ export default Ember.Mixin.create({
     return (this.get('totalShots') - this.getName('total_shots_hit'));
   }),
   hitPercent: Ember.computed('totalShotsHit', 'totalShots', function() {
-    return this.percentFormer(this.get('totalShotsHit'), this.get('totalShots'))
+    return this.percentFormer(this.get('totalShotsHit'), this.get('totalShots'));
   }),
   winRatio: Ember.computed('wins', 'total', function() {
-    return this.percentFormer(this.get('wins'), this.get('total'))
+    return this.percentFormer(this.get('wins'), this.get('total'));
   }),
   kdRatio: Ember.computed('kills', 'deaths', function() {
-    return this.percentFormer(this.get('kills'), this.get('deaths'))
+    return this.percentFormer(this.get('kills'), this.get('deaths'));
   }),
 });
 // jshint ignore: end

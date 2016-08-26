@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export function mathOp(params/*, hash*/) {
   let resultand;
-
+  
   switch (params[2]) {
     case "*":
       resultand = params[0] * params[1];

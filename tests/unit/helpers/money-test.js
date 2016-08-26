@@ -5,6 +5,6 @@ module('Unit | Helper | money');
 
 // Replace this with your real tests.
 test('it works', function(assert) {
-  let result = money([42]);
-  assert.ok(result);
+  let result = money([4200, "$"]);
+  assert.equal(result, "$42.00");
 });

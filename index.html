@@ -90,7 +90,7 @@
     </style>
   </head>
   <body>
-    <h1> Ember ERD Model Visualizer TEST4 </h1>
+    <h1> Ember ERD Model Visualizer</h1>
     <div class="models">
 <div class='row'><div class="model" data-model="user" 
                                      data-belongsTo="" 
@@ -99,7 +99,7 @@
                     user
                   </div>
                   <div class="attrs">
-                     currency <span class='attr-val'>string</span><br />  email <span class='attr-val'>string</span><br />  uid <span class='attr-val'>string</span><br />  nickname <span class='attr-val'>string</span><br />  image <span class='attr-val'>string</span><br />  online <span class='attr-val'>boolean</span><br />
+                     currency <span class='attr-val'>string</span><br />  email <span class='attr-val'>string</span><br />  uid <span class='attr-val'>string</span><br />  nickname <span class='attr-val'>string</span><br />  image <span class='attr-val'>string</span><br />  online <span class='attr-val'>boolean</span><br />  avatar <span class='attr-val'>string</span><br />
                   </div>
                   <div class="relations">
                     belongsTo: 
@@ -229,7 +229,7 @@
           arrows[i].remove();
         })()
       };
-      console.log("started")
+      
       var models = document.getElementsByClassName('model');
       var belongsTo, hasMany, modelName;
       for (var i =0; i < models.length; i++) {
@@ -294,9 +294,9 @@
             }                              
           }
         }
-        console.log("modelName: " + modelName + " with belongsTo " + belongsTo + " and hasMany " + hasMany );
+        
       }
-      console.log('finished')
+      
     }
 
     window.onresize = init

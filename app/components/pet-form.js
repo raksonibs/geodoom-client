@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   actions: {
     createPetModal() {
       var name = this.get('name');
-      this.send('fullCreation')(name);
+      this.get('fullCreationTest')(name);
     }
   }
 });

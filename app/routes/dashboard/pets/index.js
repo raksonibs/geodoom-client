@@ -10,13 +10,24 @@ export default Ember.Route.extend(RouteMixin, {
   createPetModal: false,
   actions: {
     createPet() {
-      var controller = this.controller.set('createPetModal', true);
+      this.controller.set('createPetModal', true);
       this.set('createPetModal', true);
       // this.refresh();
     },
 
     fullCreation(petName) {
-      debugger
+      const store = this.store;
+      let pet;
+
+      pet = store.createRecord('pet', {
+        name: petName
+      });
+
+      this.controller.set('name', '');
+
+      pet.save();
+      this.controller.set('createPetModal', false);
+      this.refresh()
     }
   }
 });

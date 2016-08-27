@@ -16,9 +16,8 @@ test('it renders', function(assert) {
   // Template block usage:
   this.render(hbs`
     {{#file-upload}}
-      template block text
     {{/file-upload}}
   `);
 
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), '');
 });

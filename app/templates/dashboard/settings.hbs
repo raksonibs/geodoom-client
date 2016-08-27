@@ -13,7 +13,14 @@
 
   <br />
 
-  {{file-upload}}
+  {{file-upload
+    refreshModel=(route-action 'refresh')
+  }}
+  <p> 
+    Current avatar: {{currentUser.avatar}} 
+  </p>
+
+  <img src={{currentUser.avatar}} alt="">
   
   <br />
   

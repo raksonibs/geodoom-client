@@ -17,4 +17,5 @@ export default Model.extend({
   battles: hasMany('battle', {async: true}),
   online: attr('boolean'),
   gameStats: hasMany('gameStat', {async: true}),
+  avatar: attr('string')
 });

@@ -27,7 +27,7 @@ export default Ember.Route.extend(RouteMixin, {
 
       pet.save();
       this.controller.set('createPetModal', false);
-      this.refresh()
+      this.refresh();
     }
   }
 });

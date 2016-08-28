@@ -33,7 +33,7 @@ export default Ember.Route.extend(RouteMixin, {
     removeItem(item, pet) {
       // neeed pet!
       pet.remove({ item: item }).then(response => {
-        console.log('destroyed!');
+        console.log('destroyed!', response);
         // this.refresh();
       });
 

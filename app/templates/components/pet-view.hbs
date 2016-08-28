@@ -19,6 +19,15 @@
         stat=stat
       }}
     {{/each}}
+    
+    <h1> Items</h1>
+    {{#each pet.items as |item|}}
+      {{item-display 
+        item=item
+        destroy=(route-action 'removeItem')
+        pet=pet
+      }}
+    {{/each}}
   {{/unless}}
   {{!-- NTD: should be serialized but isn't with nested relationship being used --}}
 

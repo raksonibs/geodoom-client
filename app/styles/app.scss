@@ -359,3 +359,13 @@ select {
     }
   }
 }
+
+.item-display {
+  .below {
+    color: $red;
+  }
+
+  .above {
+    color: $green;
+  }
+}

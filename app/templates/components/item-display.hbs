@@ -1,0 +1,14 @@
+<p class="item_{{item.id}}">
+  {{item.name}}: 
+  <span class={{if (gt item.attackChange 0) 'above' 'below'}}>
+    {{plus-minus item.attackChange}}
+  </span> 
+  <span class={{if (gt item.defenceChange 0) 'above' 'below'}}>
+    {{plus-minus item.defenceChange}}
+  </span>
+
+  <button onclick={{action 'destroy' item pet}}>
+    X
+  </button>
+  <hr />
+</p>

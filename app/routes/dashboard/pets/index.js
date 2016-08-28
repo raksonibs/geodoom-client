@@ -28,6 +28,15 @@ export default Ember.Route.extend(RouteMixin, {
       pet.save();
       this.controller.set('createPetModal', false);
       this.refresh();
+    },
+
+    removeItem(item, pet) {
+      // neeed pet!
+      pet.remove({ item: item }).then(response => {
+        console.log('destroyed!');
+        // this.refresh();
+      });
+
     }
   }
 });
